@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+   <constant name="struts.devMode" value="true" />
+   <package name="workreport" extends="json-default" namespace="/workreport">
+   
+      <!-- <action name="*" 
+            class="com.yan.workreport.controller.WorkReportAction" 
+            method="{1}">
+            <result name="success">/workreport.jsp</result>
+            <result name="json" type="json"></result> 
+      </action> -->
+  
+      <action name="findWorkReports" 
+            class="com.yan.workreport.controller.WorkReportAction" 
+            method="findWorkReports">
+            <result name="success">/workreport.jsp</result>
+            <result name="json" type="json"></result> 
+      </action>
+      
+      <action name="findUniqueWorkReport" 
+            class="com.yan.workreport.controller.WorkReportAction" 
+            method="findUniqueWorkReport">
+            <result name="success">/workreport.jsp</result>
+            <result name="json" type="json"></result> 
+      </action>
+      
+      <action name="saveWorkReport" 
+            class="com.yan.workreport.controller.WorkReportAction" 
+            method="saveWorkReport">
+            <result name="success">/workreport.jsp</result>
+            <result name="json" type="json"></result> 
+      </action>
+
+	<action name="deleteWorkReport" 
+            class="com.yan.workreport.controller.WorkReportAction" 
+            method="deleteWorkReport">
+            <result name="success">/workreport.jsp</result>
+            <result name="json" type="json"></result> 
+      </action>
+   </package>
+   
+</struts>

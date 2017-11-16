@@ -1,0 +1,301 @@
+package com.yan.workreport.controller;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+import com.yan.workreport.dao.WorkReportTextMongoDaoUtil;
+import com.yan.workreport.model.WorkReportText;
+import com.yan.workreport.vo.WorkReportTextVo;
+
+public class WorkReportAction extends ActionSupport{
+
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 查询出来的总条数
+	 * 分页插件需要
+	 */
+	private long total;
+	
+	/**
+	 * 返回给页面的分页查询记录
+	 * 分页插件需要
+	 */
+	private List rows;
+	
+	/**
+	 * 成功失败标志位
+	 * 前台和后台之间异步交互
+	 */
+	private boolean success;
+	
+	/**
+	 * 错误信息
+	 * 前台和后台之间异步交互
+	 */
+	private String errorMsg;
+
+	
+	private Object object;
+
+	public long getTotal() {
+		return total;
+	}
+
+	public void setTotal(long total) {
+		this.total = total;
+	}
+
+	public List getRows() {
+		return rows;
+	}
+
+	public void setRows(List rows) {
+		this.rows = rows;
+	}
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
+
+	public Object getObject() {
+		return object;
+	}
+
+	public void setObject(Object object) {
+		this.object = object;
+	}
+
+	public String findWorkReports() {
+    	
+    	Map<String, Object> map = new HashMap<String, Object>();
+		
+    	HttpServletRequest request = ServletActionContext.getRequest();
+		//当前台传过来的变量userNames是一个数组的时候，通过request.getParameterValues("userNames[]");这种方式才能获取到这个数组
+		//String[] userNames = request.getParameterValues("userNames[]");
+		String page = request.getParameter("page");
+		String r = request.getParameter("rows");
+		
+		if(page == null || "".equals(page.trim())){
+			page = "1";
+		}
+		map.put("page", page);
+		if(r == null || "".equals(r.trim())){
+			r = "10";
+		}
+		map.put("rows", r);
+		
+		//起始日期
+		String startDay = request.getParameter("startDay");
+		map.put("startDay", startDay);
+		
+		//结束日期
+		String endDay = request.getParameter("endDay");
+		map.put("endDay", endDay);
+		
+		//项目名称
+		String projectName = request.getParameter("projectName");
+		map.put("projectName", projectName);
+		
+		//项目代码
+		String projectCode = request.getParameter("projectCode");
+		map.put("projectCode", projectCode);
+		
+		//日志编写人名称
+		String writerName = request.getParameter("writerName");
+		map.put("writerName", writerName);
+		
+		//日志类型
+		String type = request.getParameter("type");
+		map.put("type", type);		
+
+		//日志正文
+		String workText = request.getParameter("workText");
+		map.put("workText", workText);	
+		
+    	//根据条件查询总条数
+    	total = 0;
+    	//查询结果
+    	WorkReportTextMongoDaoUtil workReportTextMongoDaoUtil = new WorkReportTextMongoDaoUtil();
+		List<WorkReportText> workReportTexts = workReportTextMongoDaoUtil.findWorkReportTextDocumentsByCondition(map);
+		//返回给前台的rows不能是null，否则前台js会报rows is null异常
+		List<WorkReportTextVo> workReportTextVos = new ArrayList<WorkReportTextVo>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		if(workReportTexts != null && workReportTexts.size() > 0) {
+			//workReportTextVos = new ArrayList<WorkReportTextVo>();
+			for(WorkReportText workReportText:workReportTexts){
+				WorkReportTextVo workReportTextVo = new WorkReportTextVo();
+				workReportTextVo.setId(workReportText.getId());
+				workReportTextVo.setDay(workReportText.getDay());
+				workReportTextVo.setTitle(workReportText.getTitle());
+				workReportTextVo.setType(workReportText.getType());
+				workReportTextVo.setProjectName(workReportText.getProjectName());
+				workReportTextVo.setProjectCode(workReportText.getProjectCode());
+				workReportTextVo.setWriterName(workReportText.getWriterName());
+				workReportTextVo.setWorkText(workReportText.getWorkText());
+				workReportTextVo.setUpdateTime(sdf.format(workReportText.getUpdateTime()));
+				
+				workReportTextVos.add(workReportTextVo);
+			}
+		}
+		rows = workReportTextVos;
+    	total = workReportTextMongoDaoUtil.countWorkReportTextVoDocumentsByCondition(map);
+		
+    	//下面这两个变量在这个方法中并不是必须的
+		success = true;
+		errorMsg = null;
+		return "json";
+    }
+    
+    public String findUniqueWorkReport() {
+    	
+    	HttpServletRequest request = ServletActionContext.getRequest();
+		//当前台传过来的变量userNames是一个数组的时候，通过request.getParameterValues("userNames[]");这种方式才能获取到这个数组
+		//String[] userNames = request.getParameterValues("userNames[]");
+		String id = request.getParameter("id");
+    	
+    	success = true;
+    	errorMsg = null;
+    	
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	WorkReportTextVo workReportTextVo = null;
+    	if(id != null && !"".equals(id.trim())) {
+    		WorkReportTextMongoDaoUtil workReportTextMongoDaoUtil = new WorkReportTextMongoDaoUtil();
+    		WorkReportText workReportText = workReportTextMongoDaoUtil.findWorkReportById(id);
+    		if(workReportText != null) {
+    			workReportTextVo = new WorkReportTextVo();
+    			workReportTextVo.setId(workReportText.getId());
+    			workReportTextVo.setDay(workReportText.getDay());
+    			workReportTextVo.setTitle(workReportText.getTitle());
+    			workReportTextVo.setType(workReportText.getType());
+    			workReportTextVo.setProjectName(workReportText.getProjectName());
+    			workReportTextVo.setProjectCode(workReportText.getProjectCode());
+    			workReportTextVo.setWriterName(workReportText.getWriterName());
+    			workReportTextVo.setWorkText(workReportText.getWorkText());
+    			workReportTextVo.setUpdateTime(sdf.format(workReportText.getUpdateTime()));
+    		}
+    	}
+    	object = workReportTextVo;
+    	
+    	return "json";
+    }
+    
+    public String saveWorkReport() {
+    	Map<String, Object> map = new HashMap<String, Object>();
+		
+    	HttpServletRequest request = ServletActionContext.getRequest();
+		//当前台传过来的变量userNames是一个数组的时候，通过request.getParameterValues("userNames[]");这种方式才能获取到这个数组
+		//String[] userNames = request.getParameterValues("userNames[]");
+    	
+    	String id = request.getParameter("id");
+		map.put("id", id);
+		
+    	
+		String editType = request.getParameter("editType");
+		
+		//日志编写日期
+		String day = request.getParameter("day");
+		map.put("day", day);
+		
+		//日志标题
+		String title = request.getParameter("title");
+		map.put("title", title);
+		
+		//睿智类型
+		String type = request.getParameter("type");
+		map.put("type", type);
+		
+		//项目代码
+		String projectCode = request.getParameter("projectCode");
+		map.put("projectCode", projectCode);
+		
+		//项目名称
+		String projectName = request.getParameter("projectName");
+		map.put("projectName", projectName);
+		
+		//日志编写人
+		String writerName = request.getParameter("writerName");
+		map.put("writerName", writerName);	
+		
+		//日志正文
+		String workText = request.getParameter("workText");
+		map.put("workText", workText);	
+    	
+    	if(map != null){
+    		WorkReportText reportText = new WorkReportText();
+    		reportText.setId((String)map.get("id"));
+    		reportText.setDay((String)map.get("day"));
+    		reportText.setTitle((String)map.get("title"));
+    		reportText.setType((String)map.get("type"));
+    		reportText.setProjectName((String)map.get("projectName"));
+    		reportText.setProjectCode((String)map.get("projectCode"));
+    		reportText.setWriterName((String)map.get("writerName"));
+    		reportText.setWorkText((String)map.get("workText"));
+			
+    		reportText.setValidStatus("1");
+    		
+			WorkReportTextMongoDaoUtil workReportTextMongoDaoUtil = new WorkReportTextMongoDaoUtil();
+    		if(editType != null && "new".equals(editType.trim())) {
+    			reportText.setInsertTime(new Date());
+    			reportText.setUpdateTime(new Date());
+        		
+    			id = workReportTextMongoDaoUtil.insertWorkReportText(reportText);
+				reportText.setId(id);
+				object = reportText;
+    		}else if (editType != null && "edit".equals(editType.trim())) {
+    			reportText.setUpdateTime(new Date());
+        		
+    			workReportTextMongoDaoUtil.updateWorkReportText(reportText);
+    			object = reportText;
+			}
+    	}else{
+    		success = false;
+    		errorMsg = "缺少参数或请求数据不全！";
+    	}
+    	
+    	return "json";
+    }
+    
+    public String deleteWorkReport() {
+    	HttpServletRequest request = ServletActionContext.getRequest();
+		//当前台传过来的变量userNames是一个数组的时候，通过request.getParameterValues("userNames[]");这种方式才能获取到这个数组
+		//String[] userNames = request.getParameterValues("userNames[]");
+		String id = request.getParameter("id");
+    	
+    	success = true;
+    	errorMsg = null;
+    	
+    	if(id != null && !"".equals(id.trim())){
+    		
+			WorkReportTextMongoDaoUtil workReportTextMongoDaoUtil = new WorkReportTextMongoDaoUtil();
+			//目前采用修改有效无效标志位的方式来标志删除
+			workReportTextMongoDaoUtil.updateWorkReportTextValidStatus(id, "0");
+    	}else{
+    		success = false;
+    		errorMsg = "缺少参数或请求数据不全！";
+    	}
+    	
+    	return "json";
+    }
+}
