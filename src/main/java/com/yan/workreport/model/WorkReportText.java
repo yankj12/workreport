@@ -32,7 +32,7 @@ public class WorkReportText {
 	
 	private Date updateTime;
 	
-	private List<Comment> comments;
+	private String comment;
 	
 	public String getId() {
 		return id;
@@ -122,12 +122,12 @@ public class WorkReportText {
 		this.type = type;
 	}
 
-	public List<Comment> getComments() {
-		return comments;
+	public String getComment() {
+		return comment;
 	}
 
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 	
 }

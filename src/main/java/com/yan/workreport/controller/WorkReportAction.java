@@ -154,6 +154,7 @@ public class WorkReportAction extends ActionSupport{
 				workReportTextVo.setProjectCode(workReportText.getProjectCode());
 				workReportTextVo.setWriterName(workReportText.getWriterName());
 				workReportTextVo.setWorkText(workReportText.getWorkText());
+				workReportTextVo.setComment(workReportText.getComment());
 				workReportTextVo.setUpdateTime(sdf.format(workReportText.getUpdateTime()));
 				
 				workReportTextVos.add(workReportTextVo);
@@ -193,6 +194,7 @@ public class WorkReportAction extends ActionSupport{
     			workReportTextVo.setProjectCode(workReportText.getProjectCode());
     			workReportTextVo.setWriterName(workReportText.getWriterName());
     			workReportTextVo.setWorkText(workReportText.getWorkText());
+    			workReportTextVo.setComment(workReportText.getComment());
     			workReportTextVo.setUpdateTime(sdf.format(workReportText.getUpdateTime()));
     		}
     	}
@@ -242,6 +244,11 @@ public class WorkReportAction extends ActionSupport{
 		String workText = request.getParameter("workText");
 		map.put("workText", workText);	
     	
+		//日志评论
+		String comment = request.getParameter("comment");
+		map.put("comment", comment);	
+    	
+				
     	if(map != null){
     		WorkReportText reportText = new WorkReportText();
     		reportText.setId((String)map.get("id"));
@@ -252,7 +259,7 @@ public class WorkReportAction extends ActionSupport{
     		reportText.setProjectCode((String)map.get("projectCode"));
     		reportText.setWriterName((String)map.get("writerName"));
     		reportText.setWorkText((String)map.get("workText"));
-			
+    		reportText.setComment((String)map.get("comment"));
     		reportText.setValidStatus("1");
     		
 			WorkReportTextMongoDaoUtil workReportTextMongoDaoUtil = new WorkReportTextMongoDaoUtil();
@@ -269,6 +276,8 @@ public class WorkReportAction extends ActionSupport{
     			workReportTextMongoDaoUtil.updateWorkReportText(reportText);
     			object = reportText;
 			}
+    		success = true;
+    		errorMsg = null;
     	}else{
     		success = false;
     		errorMsg = "缺少参数或请求数据不全！";

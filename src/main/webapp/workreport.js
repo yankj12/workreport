@@ -127,7 +127,8 @@ function editRecord(title){
 	        		$('#projectCode_edit').textbox('setValue', workReport.projectCode);
 	        		$('#projectName_edit').textbox('setValue', workReport.projectName);
 	        		$('#workText_edit').textbox('setValue', workReport.workText);
-	        			        		
+	        		$('#comment_edit').textbox('setValue', workReport.comment);
+	        		
 	        	}else{
 	        		$.messager.alert('提示',result.errorMsg);
 	        	}
@@ -176,7 +177,7 @@ function saveRecord(){
 	var title = $('#title_edit').textbox('getValue');
 	var type = $('#type_edit').textbox('getValue');
 	var workText = $('#workText_edit').textbox('getValue');
-	
+	var comment = $('#comment_edit').textbox('getValue');
 	
 	var requestVo = new Object();
 	requestVo.editType = editType;
@@ -189,7 +190,8 @@ function saveRecord(){
 	requestVo.projectName = projectName;
 	requestVo.writerName = writerName;
 	requestVo.workText = workText;
-
+	requestVo.comment = comment;
+	
 	$.post(contextRootPath + '/workreport/saveWorkReport', requestVo, function(result){
 		if (result.success){
 			//$.messager.alert('提示',result.errorMsg);

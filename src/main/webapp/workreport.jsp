@@ -189,14 +189,23 @@
 			</tr>
 			
 			<tr>
-					<td colspan="4">
-						<a href="#" class="easyui-linkbutton"   data-options="iconCls:'icon-indent',onClick:indentRowText">去除行首空格</a>
-					</td>
-				</tr>
+				<td colspan="4">
+					<a href="#" class="easyui-linkbutton"   data-options="iconCls:'icon-indent',onClick:indentRowText">去除行首空格</a>
+				</td>
+			</tr>
 			<tr>
 				<!-- 待审批工单内容概要 -->
 				<td colspan="4">
 					<input id="workText_edit" name="workText" class="easyui-textbox" data-options="multiline:true" value="" style="width:100%;height:200px">
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="4"><label>评论:</label></td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<input id="comment_edit" name="comment" class="easyui-textbox" data-options="multiline:true" value="" style="width:100%;height:100px">
 				</td>
 			</tr>
 			

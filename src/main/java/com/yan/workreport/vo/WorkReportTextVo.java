@@ -20,6 +20,8 @@ public class WorkReportTextVo {
 
 	private String menbers;
 	
+	private String comment;
+	
 	private String updateTime;
 	
 	public String getId() {
@@ -100,6 +102,14 @@ public class WorkReportTextVo {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 	
 }
