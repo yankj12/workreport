@@ -16,7 +16,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.yan.workreport.model.WorkReportText;
-import com.yan.workreport.util.WorkReportTextDocumentUtil;
+import com.yan.workreport.util.SchameDocumentUtil;
 
 public class WorkReportTextMongoDaoUtil {
 
@@ -47,7 +47,7 @@ public class WorkReportTextMongoDaoUtil {
 		MongoCollection<Document> collection = database.getCollection("WorkReportText");
 		
 		//Create a Document
-		Document doc = WorkReportTextDocumentUtil.workReportTextToDocument(workReportText);
+		Document doc = SchameDocumentUtil.schameToDocument(workReportText, WorkReportText.class);
 
 		//Insert a Document
 		collection.insertOne(doc);
@@ -139,7 +139,7 @@ public class WorkReportTextMongoDaoUtil {
 					WorkReportText workReportText = new WorkReportText();
 					//将document转换为interview
 					//System.out.println(doc.get("_id"));
-					workReportText = WorkReportTextDocumentUtil.documentToWorkReportText(doc);
+					workReportText = (WorkReportText)SchameDocumentUtil.documentToSchame(doc, WorkReportText.class);
 					
 					workReportTexts.add(workReportText);
 				}
@@ -227,7 +227,7 @@ public class WorkReportTextMongoDaoUtil {
 			
 			List<Document> docs = collection.find(Filters.eq("_id", new ObjectId(id))).into(new ArrayList<Document>());
 			if(docs != null && docs.size() > 0) {
-				workReportText = WorkReportTextDocumentUtil.documentToWorkReportText(docs.get(0));
+				workReportText = (WorkReportText)SchameDocumentUtil.documentToSchame(docs.get(0), WorkReportText.class);
 			}
 		}
 		
@@ -251,7 +251,7 @@ public class WorkReportTextMongoDaoUtil {
 		
 		
 		//Create a Document
-		 Document doc = WorkReportTextDocumentUtil.workReportTextToDocument(workReportText);
+		 Document doc = SchameDocumentUtil.schameToDocument(workReportText, WorkReportText.class);
 		 
 		 //Update a Document
 		 collection.updateOne(Filters.eq("_id", doc.get("_id")), new Document("$set", doc));
