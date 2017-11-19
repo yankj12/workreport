@@ -98,7 +98,7 @@ function editRecord(title){
 		//异步从action中加载数据
 		$.ajax({
 	        type:"GET", 
-	        url:contextRootPath + "/workreport/findUniqueWorkReport?id=" + id,
+	        url:contextRootPath + "/workreport/findUniqueWorkReport.do?id=" + id,
 	        //url:"leave/saveLeaveApplication?editType=新增",
 	        dataType:"json", 
 	        //data:postData,
@@ -151,7 +151,7 @@ function destroyRecord(){
 	if (row){
 		$.messager.confirm('Confirm','确定删除这条记录吗？',function(r){
 			if (r){
-				$.post(contextRootPath + '/workreport/deleteWorkReport',{id:row.id},function(result){
+				$.post(contextRootPath + '/workreport/deleteWorkReport.do',{id:row.id},function(result){
 					if (result.success){
 						$('#dg').datagrid('reload');	// reload the user data
 					} else {
@@ -192,7 +192,7 @@ function saveRecord(){
 	requestVo.workText = workText;
 	requestVo.comment = comment;
 	
-	$.post(contextRootPath + '/workreport/saveWorkReport', requestVo, function(result){
+	$.post(contextRootPath + '/workreport/saveWorkReport.do', requestVo, function(result){
 		if (result.success){
 			//$.messager.alert('提示',result.errorMsg);
 			
