@@ -12,5 +12,14 @@
         <filter-name>struts2</filter-name>
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
-
+    
+    <servlet>
+        <servlet-name>CodeSelectIntfServlet</servlet-name>
+        <servlet-class>com.yan.workreport.intf.CodeSelectIntfServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CodeSelectIntfServlet</servlet-name>
+        <url-pattern>/CodeSelectIntfServlet</url-pattern>
+    </servlet-mapping>
+    
 </web-app>

@@ -50,7 +50,11 @@
 				</td>
 				<td>项目代码:</td>
 				<td>
-					<input name="projectCode" class="easyui-textbox">
+					<input name="projectCode" class="easyui-combobox"
+						data-options="
+					        valueField: 'value',
+					        textField: 'label',
+					        url: '${ctx }/CodeSelectIntfServlet?codeType=projectCode'"/>
 				</td>
 				<td>日志编写人名称:</td>
 				<td>
