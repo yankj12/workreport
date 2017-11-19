@@ -44,4 +44,35 @@
       </action>
    </package>
    
+   <package name="login" extends="json-default" namespace="/login">
+		
+		<action name="prepareLogin" class="com.yan.access.action.LoginAction"
+			method="prepareLogin">
+			<result name="success">/main/login.jsp</result>
+		</action>
+		
+		<action name="login" class="com.yan.access.action.LoginAction"
+			method="login">
+			<result name="success">/workreport.jsp</result>
+			<result name="login">/main/login.jsp</result>
+		</action>
+		
+		<action name="logout" class="com.yan.access.action.LoginAction"
+			method="logout">
+			<result name="success">/main/login.jsp</result>
+			<result name="login">/main/login.jsp</result>
+		</action>
+		
+		<action name="checkUserUnique" class="com.yan.access.action.LoginAction"
+			method="checkUserUnique">
+			<result name="json" type="json"></result> 
+		</action>
+		
+		<!-- <action name="registeUser" class="com.yan.access.action.LoginAction"
+			method="registeUser">
+			<result name="json" type="json"></result> 
+		</action> -->
+		
+	</package>
+   
 </struts>
