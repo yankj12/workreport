@@ -106,6 +106,10 @@ public class WorkReportAction extends ActionSupport{
 		}
 		map.put("rows", r);
 		
+		//有效状态
+		String validStatus = request.getParameter("validStatus");
+		map.put("validStatus", validStatus);
+		
 		//起始日期
 		String startDay = request.getParameter("startDay");
 		map.put("startDay", startDay);
