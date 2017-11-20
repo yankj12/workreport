@@ -65,18 +65,8 @@
 					<input name="type" class="easyui-combobox" 
 						data-options="
 							valueField: 'value',
-							textField: 'label',
-							data: [{
-								label: '团队日志',
-								value: 'team'
-							},{
-								label: '个人日志',
-								value: 'person'
-							},{
-								label: '--',
-								value: '',
-								'selected':true
-							}]"/>
+					        textField: 'label',
+					        url: '${ctx }/CodeSelectIntfServlet?codeType=workReportType'"/>
 				</td>
 			</tr>
 			
@@ -159,7 +149,13 @@
 			<tr>
 				<td><label>日志类型:</label></td>
 				<td>
-					<input id="type_edit" name="type" class="easyui-textbox" value="" data-options="onChange:setWorkReportTitle"/>
+					<!-- <input id="type_edit" name="type" class="easyui-textbox" value="" data-options="onChange:setWorkReportTitle"/> -->
+					<input id="type_edit" name="type" class="easyui-combobox" 
+						data-options="
+							valueField: 'value',
+					        textField: 'label',
+					        url: '${ctx }/CodeSelectIntfServlet?codeType=workReportType&required=true',
+					        onChange:setWorkReportTitle"/>
 				</td>
 				<td><label>person/team</label></td>
 				<td>
@@ -179,11 +175,17 @@
 			<tr>
 				<td><label>项目代码:</label></td>
 				<td>
-					<input id="projectCode_edit" name="projectCode" class="easyui-textbox" value="" data-options="onChange:setWorkReportProjectName"/>
+					<!-- <input id="projectCode_edit" name="projectCode" class="easyui-textbox" value="" data-options="onChange:setWorkReportProjectName"/> -->
+					<input id="projectCode_edit" name="projectCode" class="easyui-combobox"
+						data-options="
+					        valueField: 'value',
+					        textField: 'label',
+					        url: '${ctx }/CodeSelectIntfServlet?codeType=projectCode&required=true',
+					        onChange:setWorkReportProjectName"/>
 				</td>
 				<td><label>项目名称:</label></td>
 				<td>
-					<input id="projectName_edit" name="projectName" class="easyui-textbox" value=""/>
+					<input id="projectName_edit" name="projectName" class="easyui-textbox" value="" readonly/>
 				</td>
 				
 			</tr>

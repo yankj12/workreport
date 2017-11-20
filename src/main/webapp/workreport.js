@@ -80,10 +80,10 @@ function newRecord(title){
 	$('#title_edit').textbox('setValue', title);
 	
 	var projectCode = 'cqp';
-	$('#projectCode_edit').textbox('setValue', projectCode);
+	$('#projectCode_edit').combobox('setValue', projectCode);
 	$('#projectName_edit').textbox('setValue', projectCodeToNameMap[projectCode]);
 	$('#writerName_edit').textbox('setValue', '严凯杰');
-	$('#type_edit').textbox('setValue', 'team');
+	$('#type_edit').combobox('setValue', 'team');
 	
 }
 
@@ -123,8 +123,8 @@ function editRecord(title){
 	        		
 	        		$('#writerName_edit').textbox('setValue', workReport.writerName);
 					$('#title_edit').textbox('setValue', workReport.title);
-					$('#type_edit').textbox('setValue', workReport.type);
-	        		$('#projectCode_edit').textbox('setValue', workReport.projectCode);
+					$('#type_edit').combobox('setValue', workReport.type);
+	        		$('#projectCode_edit').combobox('setValue', workReport.projectCode);
 	        		$('#projectName_edit').textbox('setValue', workReport.projectName);
 	        		$('#workText_edit').textbox('setValue', workReport.workText);
 	        		$('#comment_edit').textbox('setValue', workReport.comment);
@@ -171,11 +171,11 @@ function saveRecord(){
 	var editType = $('#editType_edit').val();
 	var id = $('#id_edit').val();
 	var day = $('#day_edit').textbox('getValue');
-	var projectCode = $('#projectCode_edit').textbox('getValue');
+	var projectCode = $('#projectCode_edit').combobox('getValue');
 	var projectName = $('#projectName_edit').textbox('getValue');
 	var writerName = $('#writerName_edit').textbox('getValue');
 	var title = $('#title_edit').textbox('getValue');
-	var type = $('#type_edit').textbox('getValue');
+	var type = $('#type_edit').combobox('getValue');
 	var workText = $('#workText_edit').textbox('getValue');
 	var comment = $('#comment_edit').textbox('getValue');
 	
@@ -222,7 +222,7 @@ function setWorkReportTitle(){
 		var m = parseInt(day.substring(4,6),10);
 		var d = parseInt(day.substring(6,8),10);
 
-		var type = $('#type_edit').textbox('getValue');
+		var type = $('#type_edit').combobox('getValue');
 		
 		//标题前缀，默认是日期yyyy-MM-dd
 		var titlePreFix = ''+y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
@@ -237,7 +237,7 @@ function setWorkReportTitle(){
 }
 
 function setWorkReportProjectName(){
-	var projectCode = $('#projectCode_edit').textbox('getValue');
+	var projectCode = $('#projectCode_edit').combobox('getValue');
 	if(projectCode != null && projectCode.length > 0  && projectCodeToNameMap != null
 		&& projectCodeToNameMap[projectCode] != null ){
 		$('#projectName_edit').textbox('setValue', projectCodeToNameMap[projectCode]);
