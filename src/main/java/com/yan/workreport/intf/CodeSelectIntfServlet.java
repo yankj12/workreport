@@ -39,26 +39,27 @@ public class CodeSelectIntfServlet  extends HttpServlet {
 			
 			TransCode transCode = null;
 			List<CodeEntry> codeEntries = null;
-			if(transCodes != null) {
+			if(transCodes != null && transCodes.size() > 0) {
 				transCode = transCodes.get(0);
-			}
-			
-			if(codeCode != null && !"".equals(codeCode.trim())){
-				//如果codecode不为空，说明是代码翻译接口，需要找到对应codecode
-				if(transCode.getTrans() != null) {
-					for(CodeEntry code:transCode.getTrans()){
-						if(code != null && code.getCodeCode() != null 
-								&& codeCode.trim().equals(code.getCodeCode().trim())) {
-							codeEntries = new ArrayList<>(1);
-							codeEntries.add(code);
-							break;
+				
+				if(codeCode != null && !"".equals(codeCode.trim())){
+					//如果codecode不为空，说明是代码翻译接口，需要找到对应codecode
+					if(transCode.getTrans() != null) {
+						for(CodeEntry code:transCode.getTrans()){
+							if(code != null && code.getCodeCode() != null 
+									&& codeCode.trim().equals(code.getCodeCode().trim())) {
+								codeEntries = new ArrayList<>(1);
+								codeEntries.add(code);
+								break;
+							}
 						}
 					}
+				}else{
+					//codecode为空，说明是代码选择接口
+					codeEntries = transCode.getTrans();
 				}
-			}else{
-				//codecode为空，说明是代码选择接口
-				codeEntries = transCode.getTrans();
 			}
+			
 			
 			if(codeEntries != null && codeEntries.size() > 0){
 				for(CodeEntry code:codeEntries){
