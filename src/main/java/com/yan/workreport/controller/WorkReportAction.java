@@ -87,6 +87,11 @@ public class WorkReportAction extends ActionSupport{
 		this.object = object;
 	}
 
+	public String workreport(){
+		
+		return "success";
+	}
+	
 	public String findWorkReports() {
     	
     	Map<String, Object> map = new HashMap<String, Object>();

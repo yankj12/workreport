@@ -15,6 +15,11 @@
             <result name="json" type="json"></result> 
       </action> -->
   
+  	<action name="workreport" 
+            class="com.yan.workreport.controller.WorkReportAction" 
+            method="workreport">
+            <result name="success">/workreport.jsp</result>
+      </action>
       <action name="findWorkReports" 
             class="com.yan.workreport.controller.WorkReportAction" 
             method="findWorkReports">
@@ -53,7 +58,7 @@
 		
 		<action name="login" class="com.yan.access.action.LoginAction"
 			method="login">
-			<result name="success">/workreport.jsp</result>
+			<result name="success">/index.jsp</result>
 			<result name="login">/main/login.jsp</result>
 		</action>
 		
