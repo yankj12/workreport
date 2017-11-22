@@ -32,6 +32,31 @@
 	$(document).ready(function() {
 
 	});
+	
+	function quit(){
+		
+		$.messager.confirm('提示', '您确定要退出系统吗？', function(r){
+			if (r){
+				//可以使用js的方式获取host及ip，也可以使用java的方式获取
+				//top.window.location.href="${ctx}/login/logout";
+				var protocol = window.location.protocol;
+				//window.location.host会把hostname和端口一起返回
+				//window.location.hostname只会返回hostname
+				var host = window.location.host;
+				//var port = window.location.port;
+				var newUrl = protocol + '//' + host + '${ctx}/login/logout.do';
+				console.log(newUrl);
+				window.location.href=newUrl;
+			}
+		});
+		
+	}
+	
+	//onload="init()"
+	function init(){
+		
+		
+	}
 </script>
 <style>
 .footer {
@@ -47,13 +72,28 @@
 </style>
 </head>
 
-<body class="easyui-layout">
+<body class="easyui-layout" onload="init()">
 
 	<div region="north" border="true" split="true"
-		style="overflow: hidden; height: 7%;">
-		<div class="footer">
-			简单数据系统
-		</div>
+		style="overflow: hidden; height: 10%;">
+		
+			<table style="width:100%;height:90%;cellpadding:0;cellspacing:0">
+				<tr>
+					<td style="text-align: center;">
+					简单数据系统
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align:right">
+						当前用户：${userMsgInfo.userCode }-${userMsgInfo.userCName }
+						&nbsp;
+						<a href="#" onclick="quit();">[退出]</a>
+						&nbsp;
+					</td>
+				</tr>
+				
+			</table>
+		
 	</div>
 
 <!-- 	<div region="south" border="true" split="true"
@@ -68,7 +108,7 @@
 		<div id="aa" class="easyui-accordion"
 			style="position: absolute; top: 27px; left: 0px; right: 0px; bottom: 0px;">
 
-			<div title="查看数据" selected="true"
+			<div title="工作日志" selected="true"
 				style="overflow: auto; padding: 10px;">
 				<ul class="easyui-tree">
 					<li><a href="#" onclick="addTab('工作日志','${ctx }/workreport/workreport.do')">工作日志</a></li>
