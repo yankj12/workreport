@@ -145,6 +145,10 @@ public class WorkReportAction extends ActionSupport{
 		String writerName = request.getParameter("writerName");
 		map.put("writerName", writerName);
 		
+		//数据类型
+		String dataType = request.getParameter("dataType");
+		map.put("dataType", dataType);		
+		
 		//日志类型
 		String type = request.getParameter("type");
 		map.put("type", type);		
@@ -166,6 +170,7 @@ public class WorkReportAction extends ActionSupport{
 				WorkReportTextVo workReportTextVo = new WorkReportTextVo();
 				workReportTextVo.setId(workReportText.getId());
 				workReportTextVo.setDay(workReportText.getDay());
+				workReportTextVo.setDataType(workReportText.getDataType());
 				workReportTextVo.setTitle(workReportText.getTitle());
 				workReportTextVo.setType(workReportText.getType());
 				workReportTextVo.setProjectName(workReportText.getProjectName());
@@ -206,6 +211,7 @@ public class WorkReportAction extends ActionSupport{
     			workReportTextVo.setId(workReportText.getId());
     			workReportTextVo.setDay(workReportText.getDay());
     			workReportTextVo.setTitle(workReportText.getTitle());
+    			workReportTextVo.setDataType(workReportText.getDataType());
     			workReportTextVo.setType(workReportText.getType());
     			workReportTextVo.setProjectName(workReportText.getProjectName());
     			workReportTextVo.setProjectCode(workReportText.getProjectCode());
@@ -241,7 +247,11 @@ public class WorkReportAction extends ActionSupport{
 		String title = request.getParameter("title");
 		map.put("title", title);
 		
-		//睿智类型
+		//数据类型
+		String dataType = request.getParameter("dataType");
+		map.put("dataType", dataType);		
+				
+		//日志类型
 		String type = request.getParameter("type");
 		map.put("type", type);
 		
@@ -271,6 +281,7 @@ public class WorkReportAction extends ActionSupport{
     		reportText.setId((String)map.get("id"));
     		reportText.setDay((String)map.get("day"));
     		reportText.setTitle((String)map.get("title"));
+    		reportText.setDataType((String)map.get("dataType"));
     		reportText.setType((String)map.get("type"));
     		reportText.setProjectName((String)map.get("projectName"));
     		reportText.setProjectCode((String)map.get("projectCode"));

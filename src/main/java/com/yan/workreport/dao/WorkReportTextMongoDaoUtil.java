@@ -95,7 +95,7 @@ public class WorkReportTextMongoDaoUtil {
 						bsons.add(Filters.gte("day", value.toString()));
 					}else if ("endDay".equals(key)) {
 						bsons.add(Filters.lte("day", value.toString()));
-					}else if ("writerName".equals(key) || "projectCode".equals(key) || "type".equals(key)) {
+					}else if ("writerName".equals(key) || "projectCode".equals(key) || "type".equals(key) || "dataType".equals(key)) {
 						bsons.add(Filters.eq(key, value.toString()));
 					}else if ("page".equals(key)) {
 						page = Integer.parseInt(value.toString());
@@ -179,7 +179,7 @@ public class WorkReportTextMongoDaoUtil {
 						bsons.add(Filters.gte("day", value.toString()));
 					}else if ("endDay".equals(key)) {
 						bsons.add(Filters.lte("day", value.toString()));
-					}else if ("writerName".equals(key) || "projectCode".equals(key) || "type".equals(key)) {
+					}else if ("writerName".equals(key) || "projectCode".equals(key) || "type".equals(key) || "dataType".equals(key)) {
 						bsons.add(Filters.eq(key, value.toString()));
 					}else if ("page".equals(key) || "rows".equals(key)) {
 						//这两个参数是分页参数，在分页查询数据时会用到，但是在查询总条数的时候并不会用到，但是也不能拼接到查询语句中

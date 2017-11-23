@@ -75,8 +75,14 @@
 				<td colspan="5">
 					<input name="workText" class="easyui-textbox"style="width:100%;"/>
 				</td>
-				<td></td>
-				<td></td>
+				<td>数据类型:</td>
+				<td>
+					<input name="dataType" class="easyui-combobox" 
+						data-options="
+							valueField: 'value',
+					        textField: 'label',
+					        url: '${ctx }/CodeSelectIntfServlet?codeType=workReportDataType'"/>
+				</td>
 				<td></td>
 				<td></td>
 				<td></td>
@@ -111,6 +117,7 @@
 			<th field="day" width="30">日期</th>
 			<th field="title" width="30">标题</th>
 			<th field="type" width="30" formatter="formatWorkReportType">日志类型</th>
+			<th field="dataType" width="30" formatter="formatWorkReportDataType">数据类型</th>
 			<th field="projectCode" width="10">项目代码</th>
 			<th field="projectName" width="30">项目名称</th>
 			<th field="writerName" width="30">日志编写人</th>
@@ -157,9 +164,13 @@
 					        url: '${ctx }/CodeSelectIntfServlet?codeType=workReportType&required=true',
 					        onChange:setWorkReportTitle"/>
 				</td>
-				<td><label>person/team</label></td>
+				<td><label>数据类型</label></td>
 				<td>
-					
+					<input id="dataType_edit" name="dataType" class="easyui-combobox" 
+						data-options="
+							valueField: 'value',
+					        textField: 'label',
+					        url: '${ctx }/CodeSelectIntfServlet?codeType=workReportDataType&required=true'"/>
 				</td>
 				
 			</tr>

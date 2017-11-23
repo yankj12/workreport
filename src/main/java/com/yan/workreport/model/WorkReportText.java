@@ -12,6 +12,13 @@ public class WorkReportText {
 	private String title;
 	
 	/**
+	 * 数据类型
+	 * 原始数据 originalData
+	 * 物化视图 materializedView
+	 */
+	private String dataType;
+	
+	/**
 	 * 个人工作日志还是团队工作日志
 	 * 个人 person
 	 * 团队 team
@@ -128,6 +135,14 @@ public class WorkReportText {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public String getDataType() {
+		return dataType;
+	}
+
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
 	}
 	
 }

@@ -8,6 +8,13 @@ public class WorkReportTextVo {
 	
 	private String title;
 	
+	/**
+	 * 数据类型
+	 * 原始数据 originalData
+	 * 物化视图 materializedView
+	 */
+	private String dataType;
+	
 	private String type;
 	
 	private String writerName;
@@ -110,6 +117,14 @@ public class WorkReportTextVo {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public String getDataType() {
+		return dataType;
+	}
+
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
 	}
 	
 }

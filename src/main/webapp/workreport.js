@@ -84,6 +84,7 @@ function newRecord(title){
 	$('#projectName_edit').textbox('setValue', projectCodeToNameMap[projectCode]);
 	$('#writerName_edit').textbox('setValue', '严凯杰');
 	$('#type_edit').combobox('setValue', 'team');
+	$('#dataType_edit').combobox('setValue', 'originalData');
 	
 }
 
@@ -124,6 +125,7 @@ function editRecord(title){
 	        		$('#writerName_edit').textbox('setValue', workReport.writerName);
 					$('#title_edit').textbox('setValue', workReport.title);
 					$('#type_edit').combobox('setValue', workReport.type);
+					$('#dataType_edit').combobox('setValue', workReport.dataType);
 	        		$('#projectCode_edit').combobox('setValue', workReport.projectCode);
 	        		$('#projectName_edit').textbox('setValue', workReport.projectName);
 	        		$('#workText_edit').textbox('setValue', workReport.workText);
@@ -176,6 +178,7 @@ function saveRecord(){
 	var writerName = $('#writerName_edit').textbox('getValue');
 	var title = $('#title_edit').textbox('getValue');
 	var type = $('#type_edit').combobox('getValue');
+	var dataType = $('#dataType_edit').combobox('getValue');
 	var workText = $('#workText_edit').textbox('getValue');
 	var comment = $('#comment_edit').textbox('getValue');
 	
@@ -186,6 +189,7 @@ function saveRecord(){
 	requestVo.day = day;
 	requestVo.title = title;
 	requestVo.type = type;
+	requestVo.dataType = dataType;
 	requestVo.projectCode = projectCode;
 	requestVo.projectName = projectName;
 	requestVo.writerName = writerName;
@@ -371,6 +375,16 @@ function selectUserCodeByName(s){
 	//setText	text	Set the displaying text value.
 	//setValue	value	Set the component value.
 }
+
+
+function formatWorkReportDataType(val,row){
+	if(val == 'originalData'){
+		return '原始数据';
+	}else if(val == 'materializedView'){
+		return '物化视图';
+	}
+}
+
 
 function formatWorkReportType(val,row){
 	if(val == 'team'){
