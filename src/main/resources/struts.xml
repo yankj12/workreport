@@ -16,33 +16,33 @@
       </action> -->
   
   	<action name="workreport" 
-            class="com.yan.workreport.controller.WorkReportAction" 
+            class="workReportAction" 
             method="workreport">
             <result name="success">/workreport.jsp</result>
       </action>
       <action name="findWorkReports" 
-            class="com.yan.workreport.controller.WorkReportAction" 
+            class="workReportAction" 
             method="findWorkReports">
             <result name="success">/workreport.jsp</result>
             <result name="json" type="json"></result> 
       </action>
       
       <action name="findUniqueWorkReport" 
-            class="com.yan.workreport.controller.WorkReportAction" 
+            class="workReportAction" 
             method="findUniqueWorkReport">
             <result name="success">/workreport.jsp</result>
             <result name="json" type="json"></result> 
       </action>
       
       <action name="saveWorkReport" 
-            class="com.yan.workreport.controller.WorkReportAction" 
+            class="workReportAction" 
             method="saveWorkReport">
             <result name="success">/workreport.jsp</result>
             <result name="json" type="json"></result> 
       </action>
 
 	<action name="deleteWorkReport" 
-            class="com.yan.workreport.controller.WorkReportAction" 
+            class="workReportAction" 
             method="deleteWorkReport">
             <result name="success">/workreport.jsp</result>
             <result name="json" type="json"></result> 
@@ -51,24 +51,24 @@
    
    <package name="login" extends="json-default" namespace="/login">
 		
-		<action name="prepareLogin" class="com.yan.access.action.LoginAction"
+		<action name="prepareLogin" class="loginAction"
 			method="prepareLogin">
 			<result name="success">/main/login.jsp</result>
 		</action>
 		
-		<action name="login" class="com.yan.access.action.LoginAction"
+		<action name="login" class="loginAction"
 			method="login">
 			<result name="success">/index.jsp</result>
 			<result name="login">/main/login.jsp</result>
 		</action>
 		
-		<action name="logout" class="com.yan.access.action.LoginAction"
+		<action name="logout" class="loginAction"
 			method="logout">
 			<result name="success">/main/login.jsp</result>
 			<result name="login">/main/login.jsp</result>
 		</action>
 		
-		<action name="checkUserUnique" class="com.yan.access.action.LoginAction"
+		<action name="checkUserUnique" class="loginAction"
 			method="checkUserUnique">
 			<result name="json" type="json"></result> 
 		</action>
