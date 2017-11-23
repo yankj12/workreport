@@ -37,7 +37,7 @@ public class CodeSelectIntfServlet  extends HttpServlet {
 		String codeType = request.getParameter("codeType");
 		String codeCode = request.getParameter("codeCode");
 		String required = request.getParameter("required");
-		
+		String selected = request.getParameter("selected");
 		//从数据库查询
 		List<SelectOptionVo> list = new ArrayList<SelectOptionVo>();
 		
@@ -77,6 +77,11 @@ public class CodeSelectIntfServlet  extends HttpServlet {
 					optionVo.setValue(code.getCodeCode());
 					optionVo.setLabel(code.getCodeValue());
 					
+					if(selected != null && code.getCodeCode() != null
+							&& selected.trim().equals(code.getCodeCode().trim())){
+						optionVo.setSelected(true);
+					}
+					
 					list.add(optionVo);
 				}
 			}
@@ -88,7 +93,14 @@ public class CodeSelectIntfServlet  extends HttpServlet {
 				SelectOptionVo optionVo = new SelectOptionVo();
 				optionVo.setLabel("--");
 				optionVo.setValue("");
-				optionVo.setSelected(true);
+				
+				//如果有默认选择的option
+				if(selected != null && !"".equals(selected.trim())){
+					
+				}else{
+					//如果没有默认选择的option，我们才选择一个--为默认
+					optionVo.setSelected(true);
+				}
 				list.add(optionVo);
 			}
 				

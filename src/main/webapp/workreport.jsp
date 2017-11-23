@@ -81,7 +81,7 @@
 						data-options="
 							valueField: 'value',
 					        textField: 'label',
-					        url: '${ctx }/CodeSelectIntfServlet?codeType=workReportDataType'"/>
+					        url: '${ctx }/CodeSelectIntfServlet?codeType=workReportDataType&selected=originalData'"/>
 				</td>
 				<td></td>
 				<td></td>
