@@ -30,6 +30,8 @@ public class LoginAction extends ActionSupport{
 	
 	private String errorMsg;
 	
+	private UserMongoDaoUtil userMongoDaoUtil;
+	
 	private UserMsgInfo userMsgInfo;
 	
 	public String prepareLogin(){
@@ -65,8 +67,6 @@ public class LoginAction extends ActionSupport{
 					return "login";
 				}
 				String passwordMD5 = DigestUtils.md5Hex(password);
-				
-				UserMongoDaoUtil userMongoDaoUtil = new UserMongoDaoUtil();
 				
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("userCode", userCode);
@@ -139,8 +139,6 @@ public class LoginAction extends ActionSupport{
 		if(user != null){
 			String userCode = user.getUserCode();
 			String email = user.getEmail();
-			
-			UserMongoDaoUtil userMongoDaoUtil = new UserMongoDaoUtil();
 			
 			if(userCode != null && !"".equals(userCode.trim())){
 				Map<String, Object> map = new HashMap<String, Object>();
@@ -305,6 +303,14 @@ public class LoginAction extends ActionSupport{
 
 	public void setSuccess(boolean success) {
 		this.success = success;
+	}
+
+	public UserMongoDaoUtil getUserMongoDaoUtil() {
+		return userMongoDaoUtil;
+	}
+
+	public void setUserMongoDaoUtil(UserMongoDaoUtil userMongoDaoUtil) {
+		this.userMongoDaoUtil = userMongoDaoUtil;
 	}
 	
 }

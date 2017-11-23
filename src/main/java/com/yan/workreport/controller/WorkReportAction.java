@@ -47,6 +47,8 @@ public class WorkReportAction extends ActionSupport{
 	
 	private Object object;
 
+	private WorkReportTextMongoDaoUtil workReportTextMongoDaoUtil;
+	
 	public long getTotal() {
 		return total;
 	}
@@ -85,6 +87,14 @@ public class WorkReportAction extends ActionSupport{
 
 	public void setObject(Object object) {
 		this.object = object;
+	}
+
+	public WorkReportTextMongoDaoUtil getWorkReportTextMongoDaoUtil() {
+		return workReportTextMongoDaoUtil;
+	}
+
+	public void setWorkReportTextMongoDaoUtil(WorkReportTextMongoDaoUtil workReportTextMongoDaoUtil) {
+		this.workReportTextMongoDaoUtil = workReportTextMongoDaoUtil;
 	}
 
 	public String workreport(){
@@ -146,7 +156,6 @@ public class WorkReportAction extends ActionSupport{
     	//根据条件查询总条数
     	total = 0;
     	//查询结果
-    	WorkReportTextMongoDaoUtil workReportTextMongoDaoUtil = new WorkReportTextMongoDaoUtil();
 		List<WorkReportText> workReportTexts = workReportTextMongoDaoUtil.findWorkReportTextDocumentsByCondition(map);
 		//返回给前台的rows不能是null，否则前台js会报rows is null异常
 		List<WorkReportTextVo> workReportTextVos = new ArrayList<WorkReportTextVo>();
@@ -191,7 +200,6 @@ public class WorkReportAction extends ActionSupport{
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     	WorkReportTextVo workReportTextVo = null;
     	if(id != null && !"".equals(id.trim())) {
-    		WorkReportTextMongoDaoUtil workReportTextMongoDaoUtil = new WorkReportTextMongoDaoUtil();
     		WorkReportText workReportText = workReportTextMongoDaoUtil.findWorkReportById(id);
     		if(workReportText != null) {
     			workReportTextVo = new WorkReportTextVo();
@@ -271,7 +279,6 @@ public class WorkReportAction extends ActionSupport{
     		reportText.setComment((String)map.get("comment"));
     		reportText.setValidStatus("1");
     		
-			WorkReportTextMongoDaoUtil workReportTextMongoDaoUtil = new WorkReportTextMongoDaoUtil();
     		if(editType != null && "new".equals(editType.trim())) {
     			reportText.setInsertTime(new Date());
     			reportText.setUpdateTime(new Date());
@@ -306,7 +313,6 @@ public class WorkReportAction extends ActionSupport{
     	
     	if(id != null && !"".equals(id.trim())){
     		
-			WorkReportTextMongoDaoUtil workReportTextMongoDaoUtil = new WorkReportTextMongoDaoUtil();
 			//目前采用修改有效无效标志位的方式来标志删除
 			workReportTextMongoDaoUtil.updateWorkReportTextValidStatus(id, "0");
     	}else{

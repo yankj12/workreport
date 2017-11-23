@@ -3,10 +3,27 @@
     xsi:schemaLocation ="http://www.springframework.org/schema/beans 
     http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
     
-    <bean name="loginAction" class="com.yan.access.action.LoginAction">
+    <!-- action -->
+    <bean id="loginAction" class="com.yan.access.action.LoginAction">
+    	<property name="userMongoDaoUtil">
+			<ref local="userMongoDaoUtil" />
+		</property>
     </bean>
     
-    <bean name="workReportAction" class="com.yan.workreport.controller.WorkReportAction">
+    <bean id="workReportAction" class="com.yan.workreport.controller.WorkReportAction">
+    	<property name="workReportTextMongoDaoUtil">
+			<ref local="workReportTextMongoDaoUtil" />
+		</property>
+    </bean>
+    
+    <!-- service -->
+    <bean id="userMongoDaoUtil" class="com.yan.access.dao.UserMongoDaoUtil">
+    </bean>
+    
+    <bean id="transCodeMongoDaoUtil" class="com.yan.workreport.dao.TransCodeMongoDaoUtil">
+    </bean>
+    
+    <bean id="workReportTextMongoDaoUtil" class="com.yan.workreport.dao.WorkReportTextMongoDaoUtil">
     </bean>
     
 </beans>

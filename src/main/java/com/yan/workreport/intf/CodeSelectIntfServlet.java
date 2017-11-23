@@ -5,10 +5,14 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.yan.workreport.dao.TransCodeMongoDaoUtil;
@@ -23,6 +27,12 @@ public class CodeSelectIntfServlet  extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		//获取ServletContext 再获取 WebApplicationContextUtils  
+        ServletContext servletContext = this.getServletContext();  
+        WebApplicationContext context =   
+                WebApplicationContextUtils.getWebApplicationContext(servletContext);  
+        TransCodeMongoDaoUtil transCodeMongoDaoUtil = (TransCodeMongoDaoUtil) context.getBean("transCodeMongoDaoUtil"); 
+		
 		//获取入参
 		String codeType = request.getParameter("codeType");
 		String codeCode = request.getParameter("codeCode");
@@ -33,7 +43,7 @@ public class CodeSelectIntfServlet  extends HttpServlet {
 		
 		if(codeType != null && !"".equals(codeType.trim())){
 			
-			TransCodeMongoDaoUtil transCodeMongoDaoUtil = new TransCodeMongoDaoUtil();
+			//TransCodeMongoDaoUtil transCodeMongoDaoUtil = new TransCodeMongoDaoUtil();
 			List<TransCode> transCodes = null;
 			transCodes = transCodeMongoDaoUtil.findTransCodeDocumentsByCodeTypeAndValidStatus(codeType, "1");
 			
