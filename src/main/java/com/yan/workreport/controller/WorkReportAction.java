@@ -318,7 +318,7 @@ public class WorkReportAction extends ActionSupport{
 //    		condition.put("type", "team");
     			//项目代码
     			condition.put("projectCode", projectCode);
-    			List<WorkReportText> workReportTexts = workReportTextMongoDaoUtil.findWorkReportTextDocumentsByCondition(map);
+    			List<WorkReportText> workReportTexts = workReportTextMongoDaoUtil.findWorkReportTextDocumentsByCondition(condition);
     			WorkReportText materializedViewWorkReportText = null;
     			if(workReportTexts != null && workReportTexts.size() > 0) {
     				materializedViewWorkReportText = workReportTexts.get(0);
@@ -356,7 +356,9 @@ public class WorkReportAction extends ActionSupport{
     				List<WorkReportText> reportTexts = workReportTextMongoDaoUtil.findWorkReportTextDocumentsByCondition(newMap);
     				if(reportTexts != null && reportTexts.size() > 0) {
     					
-    					StringBuilder newText = new StringBuilder("今天工作完成情况：\n-----------------------------\n\n");
+    					StringBuilder newText = new StringBuilder();
+    					newText.append(year).append("-").append(month).append("-").append(date).append("\n");
+    					newText.append("今天工作完成情况：\n-----------------------------\n\n");
     					
     					for(WorkReportText report : reportTexts) {
     						String userName = report.getWriterName();
@@ -365,6 +367,7 @@ public class WorkReportAction extends ActionSupport{
     						
     						newText.append(userName).append("\n").append(text).append("\n评论：\n").append(comm).append("\n\n");
     					}
+    					materializedViewWorkReportText.setWorkText(newText.toString());
     					
     					materializedViewWorkReportText.setInsertTime(new Date());
     					materializedViewWorkReportText.setUpdateTime(new Date());
@@ -404,7 +407,9 @@ public class WorkReportAction extends ActionSupport{
     				List<WorkReportText> reportTexts = workReportTextMongoDaoUtil.findWorkReportTextDocumentsByCondition(newMap);
     				if(reportTexts != null && reportTexts.size() > 0) {
     					
-    					StringBuilder newText = new StringBuilder("今天工作完成情况：\n-----------------------------\n\n");
+    					StringBuilder newText = new StringBuilder();
+    					newText.append(year).append("-").append(month).append("-").append(date).append("\n");
+    					newText.append("今天工作完成情况：\n-----------------------------\n\n");
     					
     					for(WorkReportText report : reportTexts) {
     						String userName = report.getWriterName();
@@ -413,6 +418,7 @@ public class WorkReportAction extends ActionSupport{
     						
     						newText.append(userName).append("\n").append(text).append("\n评论：\n").append(comm).append("\n\n");
     					}
+    					materializedViewWorkReportText.setWorkText(newText.toString());
     					
     					materializedViewWorkReportText.setUpdateTime(new Date());
     					
