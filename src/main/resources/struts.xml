@@ -79,5 +79,6 @@
 		</action> -->
 		
 	</package>
-   
+	
+   <include file="struts/struts-menu.xml" />
 </struts>

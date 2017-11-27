@@ -114,6 +114,13 @@
 					<li><a href="#" onclick="addTab('工作日志','${ctx }/workreport/workreport.do')">工作日志</a></li>
 				</ul>
 			</div>
+			
+			<div title="菜单管理" selected="true"
+				style="overflow: auto; padding: 10px;">
+				<ul class="easyui-tree">
+					<li><a href="#" onclick="addTab('菜单管理','${ctx }/menu/listMenu.do')">工作日志</a></li>
+				</ul>
+			</div>
 
 		</div>
 	</div>

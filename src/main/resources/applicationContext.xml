@@ -10,6 +10,12 @@
 		</property>
     </bean>
     
+    <bean id="menuAction" class="com.yan.access.action.MenuAction">
+    	<property name="menuMongoDaoUtil">
+			<ref local="menuMongoDaoUtil" />
+		</property>
+    </bean>
+    
     <bean id="workReportAction" class="com.yan.workreport.controller.WorkReportAction">
     	<property name="workReportTextMongoDaoUtil">
 			<ref local="workReportTextMongoDaoUtil" />
@@ -18,6 +24,9 @@
     
     <!-- service -->
     <bean id="userMongoDaoUtil" class="com.yan.access.dao.UserMongoDaoUtil">
+    </bean>
+    
+    <bean id="menuMongoDaoUtil" class="com.yan.access.dao.MenuMongoDaoUtil">
     </bean>
     
     <bean id="transCodeMongoDaoUtil" class="com.yan.workreport.dao.TransCodeMongoDaoUtil">

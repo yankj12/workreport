@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<constant name="struts.devMode" value="true" />
+	<package name="menu" extends="json-default" namespace="/menu">
+	
+		<action name="listMenu" 
+            class="menuAction" 
+            method="listMenu">
+            <result name="success">/pages/menu/listMenu.jsp</result>
+		</action>
+		
+		<action name="showMenus" 
+            class="menuAction" 
+            method="showMenus">
+            <result name="json" type="json"></result> 
+		</action>
+		
+		<action name="queryMenu" 
+            class="menuAction" 
+            method="queryMenu">
+            <result name="json" type="json"></result> 
+		</action>
+		
+		<action name="editMenu" 
+            class="menuAction" 
+            method="editMenu">
+            <result name="success">/pages/menu/editMenu.jsp</result>
+		</action>
+		
+		<action name="deleteMenu" 
+            class="menuAction" 
+            method="deleteMenu">
+            <result name="json" type="json"></result> 
+		</action>
+		
+		<action name="saveMenu" 
+            class="menuAction" 
+            method="saveMenu">
+            <result name="json" type="json"></result> 
+		</action>
+		
+	</package>
+	
+</struts>
