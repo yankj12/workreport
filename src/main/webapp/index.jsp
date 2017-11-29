@@ -118,7 +118,7 @@
 			<div title="菜单管理" selected="true"
 				style="overflow: auto; padding: 10px;">
 				<ul class="easyui-tree">
-					<li><a href="#" onclick="addTab('菜单管理','${ctx }/menu/listMenu.do')">工作日志</a></li>
+					<li><a href="#" onclick="addTab('菜单管理','${ctx }/menu/listMenu.do')">菜单管理</a></li>
 				</ul>
 			</div>
 
