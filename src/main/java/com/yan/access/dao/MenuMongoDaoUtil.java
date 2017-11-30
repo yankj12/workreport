@@ -83,6 +83,8 @@ public class MenuMongoDaoUtil {
 						rows = Integer.parseInt(value.toString());
 					}else if ("sort".equalsIgnoreCase(key) || "orderBy".equalsIgnoreCase(key)) {
 						sort = value.toString();
+					}else if ("menuLevel".equals(key)) {
+						bsons.add(Filters.eq(key, Integer.parseInt(value.toString())));
 					}else {
 						bsons.add(Filters.eq(key, value.toString()));
 					}
@@ -151,6 +153,8 @@ public class MenuMongoDaoUtil {
 						//这两个参数是分页参数，在分页查询数据时会用到，但是在查询总条数的时候并不会用到，但是也不能拼接到查询语句中
 					}else if ("sort".equalsIgnoreCase(key) || "orderBy".equalsIgnoreCase(key)) {
 						
+					}else if ("menuLevel".equals(key)) {
+						bsons.add(Filters.eq(key, Integer.parseInt(value.toString())));
 					}else {
 						bsons.add(Filters.eq(key, value.toString()));
 					}
