@@ -430,7 +430,6 @@ public class MenuAction extends ActionSupport{
 			success = false;
 			errorMsg = e.getLocalizedMessage();
 		}
-		success = true;
 		return "json";
 	}
 	

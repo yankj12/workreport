@@ -103,4 +103,14 @@ function addTab(title, url) {
 			closable : true
 		});
 	}
-}	
+}
+
+function closeTab(title){
+	//根据tab的标题关闭
+	//content_tabs是生成tab的容器id，close表示关闭，tab_name是tab的标题
+	//$("#content_tabs").tabs('close','tab_name');
+	var jq = top.jQuery;
+	if (jq('#home').tabs('exists', title)) {
+		jq('#home').tabs('close', title);
+	}
+}

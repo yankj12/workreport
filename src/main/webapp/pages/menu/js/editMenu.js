@@ -5,6 +5,14 @@ function saveMenu(){
 	var data = $('#menuForm').serializeArray();//先进行序列化数组操作
 	var paramStr = $.param(data);
     
+	var editTypeOld = $('#menu_editType_hidden').val();
+	var title = '';
+	if(editTypeOld != null && editTypeOld == 'new'){
+		title = '新增菜单';
+	}else if(editTypeOld != null && editTypeOld == 'edit'){
+		title = '修改菜单';
+	}
+	
 	//通过异步的方式与后台进行交互
     $.ajax({
         type:"POST", 
@@ -14,18 +22,28 @@ function saveMenu(){
         success:function(result){
         	if (result.success){
         		//(提示框标题，提示信息)
+        		//alert(result.errorMsg);
+        		
+        		//easyui所有的$.messager都是异步的，如果想要在消息框关闭后做什么事情，需要些回调方法
+        		$.messager.alert('提示',result.errorMsg,'info',function(){
+        			//如果成功，关闭tab页，重新加载数据集
+            		closeTab(title);
+            		$('#dg').datagrid('reload');	// reload the user data
+        		});
+        		
+//        		var menu = result.menu;
+//        		
+//        		//将url改为修改
+//        		$('#menu_editType_hidden').val('edit');
+//        		
+//        		var menuId = menu.id;
+//        		//jquery中.是选择器中的一种语法，所以不要在id中放入.
+//        		$('#menu_id_label').text(menuId);
+//        		$('#menu_id_hidden').val(menuId);
+        		
+        	}else{
+        		//(提示框标题，提示信息)
         		$.messager.alert('提示',result.errorMsg);
-        		
-        		var menu = result.menu;
-        		
-        		//将url改为修改
-        		$('#menu_editType_hidden').val('edit');
-        		
-        		var menuId = menu.id;
-        		//jquery中.是选择器中的一种语法，所以不要在id中放入.
-        		$('#menu_id_label').text(menuId);
-        		$('#menu_id_hidden').val(menuId);
-        		
         	}
         },
        	failure:function (result) {  
@@ -109,4 +127,15 @@ function init(){
        	}
 	});
 	
+}
+
+
+function closeTab(title){
+	//根据tab的标题关闭
+	//content_tabs是生成tab的容器id，close表示关闭，tab_name是tab的标题
+	//$("#content_tabs").tabs('close','tab_name');
+	var jq = top.jQuery;
+	if (jq('#home').tabs('exists', title)) {
+		jq('#home').tabs('close', title);
+	}
 }
