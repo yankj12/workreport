@@ -55,7 +55,56 @@
 	//onload="init()"
 	function init(){
 		
-		
+		$.ajax({
+	        type:"POST", 
+	        url:contextRootPath + "/menu/showMenus.do",
+	        dataType:"json", 
+	        contentType: "text/html;charset=UTF-8", 
+	        success:function(result){
+	        	if (result.success){
+	        		//$.messager.alert('提示', '加载菜单');
+	        		var menus = result.rows;
+	        		
+	        		if(menus != null){
+		        		for(var i=0;i<menus.length;i++){
+		        			
+		        			var firstLevelMenuName = menus[i].menuName;
+		        			//一级菜单没有url
+		        			var subMenus = menus[i].subMenus;
+		        			
+		        			var menuSelected = false;
+		        			if(i==0){
+		        				menuSelected = true;
+		        			}
+		        			
+							var innerHtmlStr = '<div style="overflow: auto; padding: 10px;"><ul class="easyui-tree">';
+		        			
+		        			if(subMenus != null){
+		        				for(var j=0;j<subMenus.length;j++){
+		        					var subMenuName = subMenus[j].menuName;
+		        					var subMenuUrl = subMenus[j].url;
+		        					var innerHtmlStr = innerHtmlStr + '<li><a href="#" onclick="addTab(\'' + subMenuName +'\',\'' + contextRootPath + '/' + subMenuUrl + '\')">' + subMenuName + '</a></li>';
+		        				}
+		        			}
+							
+		        			var innerHtmlStr = innerHtmlStr + '</ul></div>';
+		        			
+		        			
+		        			$('#menuDiv').accordion('add', {  
+	                            title : firstLevelMenuName,  
+	                            selected : menuSelected,  
+	                            content : innerHtmlStr  
+	                        }); 
+		        			
+		        		}
+	        		}
+	        	}
+	        },
+	       	failure:function (result) {  
+	       		//(提示框标题，提示信息)
+	    		$.messager.alert('提示',result.errorMsg);
+	       	}
+		});
 	}
 </script>
 <style>
@@ -105,7 +154,12 @@
 
 	<div region="west" split="true" title="功能菜单" style="width: 10%;">
 
-		<div id="aa" class="easyui-accordion"
+		<div id="menuDiv" class="easyui-accordion"
+			style="position: absolute; top: 27px; left: 0px; right: 0px; bottom: 0px;">
+			<!-- 菜单通过动态加载出来 -->
+		</div>
+		
+		<%-- <div id="aa" class="easyui-accordion"
 			style="position: absolute; top: 27px; left: 0px; right: 0px; bottom: 0px;">
 
 			<div title="工作日志" selected="true"
@@ -122,7 +176,7 @@
 				</ul>
 			</div>
 
-		</div>
+		</div> --%>
 	</div>
 
 	<div id="mainPanle" region="center" style="overflow: hidden;width: 90%;">
