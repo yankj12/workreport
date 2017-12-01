@@ -86,6 +86,12 @@ function newRecord(title){
 	$('#type_edit').combobox('setValue', 'team');
 	$('#dataType_edit').combobox('setValue', 'originalData');
 	
+	//清空日志任务标签中的数据
+	$('#dg2').datagrid('loadData',{total:0,rows:[]});
+	//默认选中日志内容标签
+//	$('#tabs').tabs('getTab','Tab2')
+//	$('#frame_tabs').tabs('getSelected');
+	$("#tabs").tabs("select", 0);
 }
 
 
@@ -130,6 +136,12 @@ function editRecord(title){
 	        		$('#projectName_edit').textbox('setValue', workReport.projectName);
 	        		$('#workText_edit').textbox('setValue', workReport.workText);
 	        		$('#comment_edit').textbox('setValue', workReport.comment);
+	        		
+	        		
+	        		//加载日志任务标签中的数据
+	        		$('#dg2').datagrid('loadData',{total:0,rows:[]});
+	        		//默认选中日志内容标签
+	        		$("#tabs").tabs("select", 0);
 	        		
 	        	}else{
 	        		$.messager.alert('提示',result.errorMsg);
@@ -248,6 +260,14 @@ function setWorkReportProjectName(){
 	}
 }
 
+function setTaskProjectName(){
+	var projectCode = $('#task_projectCode_edit').combobox('getValue');
+	if(projectCode != null && projectCode.length > 0  && projectCodeToNameMap != null
+		&& projectCodeToNameMap[projectCode] != null ){
+		$('#task_projectName_edit').textbox('setValue', projectCodeToNameMap[projectCode]);
+	}
+}
+
 /**
  * 去除工作日志中每行行首的空白符
  */
@@ -266,6 +286,113 @@ function indentRowText(){
 	}
 	//alert(newWorkText);
 	$('#workText_edit').textbox('setValue', newWorkText);
+}
+
+/**
+ * 将工作日志的文本拆分成任务
+ */
+function workTextSplitToTask(){
+	var dataType = $('#dataType_edit').combobox('getValue');
+	
+	//项目名称、项目代码、任务处理的人、任务进度、任务标题、备注信息等。关键词等
+	var projectCode = $('#projectCode_edit').combobox('getValue');
+	var projectName = $('#projectName_edit').textbox('getValue');
+	var userCode = $('#userCode_edit').val();
+	var writerName = $('#writerName_edit').textbox('getValue');
+	
+	var workText = $('#workText_edit').textbox('getValue');
+	var rows = workText.split(/[\r\n]/g);
+	for(var i=0;i<rows.length;i++){
+		var rowText = rows[i].replace(/^\s*/, '');
+		rowText = rowText.replace(/[\r\n]/g, '');
+		
+		$('#dg2').datagrid('appendRow',{userrName:writerName,projectCode:projectCode,projectName:projectName,title:rowText});
+	}
+}
+
+var editIndex = undefined;
+function endEditing(){
+	if (editIndex == undefined){
+		return true
+	}
+	if ($('#dg2').datagrid('validateRow', editIndex)){
+		var ed = $('#dg2').datagrid('getEditor', {index:editIndex,field:'productid'});
+		var productname = $(ed.target).combobox('getText');
+		$('#dg2').datagrid('getRows')[editIndex]['productname'] = productname;
+		$('#dg2').datagrid('endEdit', editIndex);
+		editIndex = undefined;
+		return true;
+	} else {
+		return false;
+	}
+}
+function append(){
+	if (endEditing()){
+		$('#dg2').datagrid('appendRow',{status:'P'});
+		editIndex = $('#dg2').datagrid('getRows').length-1;
+		$('#dg2').datagrid('selectRow', editIndex)
+				.datagrid('beginEdit', editIndex);
+	}
+}
+function removeit(){
+	if (editIndex == undefined){
+		return
+	}
+	$('#dg2').datagrid('cancelEdit', editIndex)
+			.datagrid('deleteRow', editIndex);
+	editIndex = undefined;
+}
+
+function reject(){
+	$('#dg2').datagrid('rejectChanges');
+	editIndex = undefined;
+}
+
+/**
+ * 编辑任务内容
+ */
+function editTask(){
+	var row = $('#dg2').datagrid('getSelected');    //这一步可以改造为从后台异步获取数据
+	
+	if(row != null){
+		//先打开界面
+		$('#dlg2').dialog('open').dialog('setTitle','任务');
+		$('#fm2').form('clear');
+		//赋值
+		$('#editType_edit').val("edit");
+		$('#task_title_edit').textbox('setValue', row.title);
+		$('#task_projectCode_edit').combobox('setValue', row.projectCode);
+		$('#task_userrName_edit').textbox('setValue', row.userrName);
+		$('#task_progressStatus_edit').textbox('setValue', row.progressStatus);
+		$('#task_keys_edit').textbox('setValue', row.keys);
+		$('#task_comment_edit').textbox('setValue', row.comment);
+		
+		
+	}
+}
+
+/**
+ * 关闭任务窗口
+ * 先将窗口中的值赋值到打他grid的row中
+ * 再将
+ */
+function closeTask(){
+	var row = $('#dg2').datagrid('getSelected');
+	
+	if(row != null){
+		row.title = $('#task_title_edit').textbox('getValue');
+		row.projectCode = $('#task_projectCode_edit').combobox('getValue');
+		row.projectName = $('#task_projectName_edit').textbox('getValue');
+		row.userrName = $('#task_userrName_edit').textbox('getValue');
+		row.progressStatus = $('#task_progressStatus_edit').textbox('getValue');
+		row.keys = $('#task_keys_edit').textbox('getValue');
+		row.comment = $('#task_comment_edit').textbox('getValue');
+		
+		$('#fm2').form('clear');
+		$('#dlg2').datagrid('refreshRow', row);
+	}
+	//关闭窗口
+	$('#dlg2').dialog('close');
 }
 
 function addDate(date,dayAdd){
