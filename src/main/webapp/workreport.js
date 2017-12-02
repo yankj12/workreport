@@ -310,30 +310,20 @@ function workTextSplitToTask(){
 	}
 }
 
-var editIndex = undefined;
-function endEditing(){
-	if (editIndex == undefined){
-		return true
-	}
-	if ($('#dg2').datagrid('validateRow', editIndex)){
-		var ed = $('#dg2').datagrid('getEditor', {index:editIndex,field:'productid'});
-		var productname = $(ed.target).combobox('getText');
-		$('#dg2').datagrid('getRows')[editIndex]['productname'] = productname;
-		$('#dg2').datagrid('endEdit', editIndex);
-		editIndex = undefined;
-		return true;
-	} else {
-		return false;
-	}
-}
+/**
+ * 在最后添加行
+ * @returns
+ */
 function append(){
-	if (endEditing()){
-		$('#dg2').datagrid('appendRow',{status:'P'});
-		editIndex = $('#dg2').datagrid('getRows').length-1;
-		$('#dg2').datagrid('selectRow', editIndex)
-				.datagrid('beginEdit', editIndex);
-	}
+	$('#dg2').datagrid('appendRow',{});
+	var rowIndex = $('#dg2').datagrid('getRows').length-1;
+	$('#dg2').datagrid('selectRow', rowIndex);
 }
+
+/**
+ * 删除行
+ * @returns
+ */
 function removeit(){
 
 	var row = $('#dg2').datagrid('getSelected');
@@ -346,10 +336,9 @@ function removeit(){
 	}
 }
 
-function reject(){
-	$('#dg2').datagrid('rejectChanges');
-	editIndex = undefined;
-}
+//function reject(){
+//	$('#dg2').datagrid('rejectChanges');
+//}
 
 /**
  * 编辑任务内容
