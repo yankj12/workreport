@@ -335,12 +335,15 @@ function append(){
 	}
 }
 function removeit(){
-	if (editIndex == undefined){
-		return
+
+	var row = $('#dg2').datagrid('getSelected');
+	
+	if(row != null){
+		//获得选中行的row index
+		//getRowIndex 	row 	Return the specified row index, the row parameter can be a row record or an id field value.
+		var rowIndex = $('#dg2').datagrid('getRowIndex', row);
+		$('#dg2').datagrid('deleteRow', rowIndex);
 	}
-	$('#dg2').datagrid('cancelEdit', editIndex)
-			.datagrid('deleteRow', editIndex);
-	editIndex = undefined;
 }
 
 function reject(){
