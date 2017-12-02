@@ -389,7 +389,10 @@ function closeTask(){
 		row.comment = $('#task_comment_edit').textbox('getValue');
 		
 		$('#fm2').form('clear');
-		$('#dlg2').datagrid('refreshRow', row);
+		//getRowIndex 	row 	Return the specified row index, the row parameter can be a row record or an id field value.
+		var rowIndex = $('#dg2').datagrid('getRowIndex', row);
+		//refreshRow 	index 	Refresh a row.
+		$('#dg2').datagrid('refreshRow', rowIndex);
 	}
 	//关闭窗口
 	$('#dlg2').dialog('close');
