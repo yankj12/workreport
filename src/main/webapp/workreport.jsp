@@ -273,7 +273,7 @@
 	<div id="dlg2" class="easyui-dialog" style="width:800px;height:auto;padding:0px 0px;overflow:hidden;"
 			closed="true" buttons="#dlg2-buttons">
 		<form id="fm2" method="post" novalidate>
-		<table cellpadding="0" style="width:100%;">
+		<table cellpadding="5px" style="width:100%;">
 		
 			<tr>
 				<td><label>日志标题</label></td>
@@ -313,12 +313,12 @@
 			<tr>
 				<td><label>关键词</label></td>
 				<td colspan="3">
-					<input id="task_keys_edit" name="keys" class="easyui-textbox" value="" style="width:100%">
+					<input id="task_keys_edit" name="keys" class="easyui-textbox" value="" style="width:98%">
 				</td>
 			</tr>
 			<tr>
 				<td colspan="4">
-					<input id="task_comment_edit" name="comment" class="easyui-textbox" data-options="multiline:true" value="" style="width:100%;height:100px">
+					<input id="task_comment_edit" name="comment" class="easyui-textbox" data-options="multiline:true" value="" style="width:98%;height:100px">
 				</td>
 			</tr>
 		</table>
