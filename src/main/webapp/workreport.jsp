@@ -317,7 +317,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="4">
+				<td><label>备注</label></td>
+				<td colspan="3">
 					<input id="task_comment_edit" name="comment" class="easyui-textbox" data-options="multiline:true" value="" style="width:98%;height:100px">
 				</td>
 			</tr>
