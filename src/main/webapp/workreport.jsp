@@ -237,7 +237,7 @@
 					<table id="dg2" class="easyui-datagrid" style="width:100%;height:auto;"
 							url=""
 							toolbar="#toolbar2"
-							rownumbers="true" pagination="false" fitColumns="true" singleSelect="true">
+							rownumbers="true" pagination="false" fitColumns="true" singleSelect="false">
 							<!-- table增加了pagination="true"属性，就增加了底部的分页工具栏 -->
 						<thead>
 							<tr>
@@ -249,7 +249,7 @@
 								<th data-options="field:'userrName',hidden:true">指派给</th>
 								<th field="progressStatus" width="30">任务进度</th>
 								<th field="keys" width="50">关键词</th>
-								<th data-options="field:'comment',hidden:true">指派给</th>
+								<th data-options="field:'comment',hidden:true">备注</th>
 							</tr>
 						</thead>
 					</table>
@@ -258,6 +258,7 @@
 						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">移除</a>
 						<!-- <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">撤销</a> -->
 						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editTask()">编辑任务信息</a>
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="mergeToTask()">归并为一个任务</a>
 					</div>
 				</div>
 			</div>

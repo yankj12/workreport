@@ -341,6 +341,38 @@ function removeit(){
 //}
 
 /**
+ * 将多行数据合并为一个任务
+ * @returns
+ */
+function mergeToTask(){
+	var rows = $('#dg2').datagrid('getSelections');
+	
+	if(rows != null && rows.length > 1){
+		
+		for(var i=rows.length-1;i>=0;i--){
+			if(i>0){
+				//获得选中行的row index
+				//getRowIndex 	row 	Return the specified row index, the row parameter can be a row record or an id field value.
+				var rowIndex = $('#dg2').datagrid('getRowIndex', rows[i]);
+				//将这一行的数据添加到任务的comment中
+				//因为是从数组末尾倒着循环的，所以需要将 rows[i].title 添加到comment的开头
+				var oldComment = '';
+				if(rows[0].comment != null && rows[0].comment != null){
+					oldComment = '\n' + rows[0].comment;
+				}
+				rows[0].comment = rows[i].title + oldComment; 
+				
+				//删除这一行
+				$('#dg2').datagrid('deleteRow', rowIndex);
+			}
+			
+		}
+	}else{
+		$.messager.alert('提示','请至少选择两行数据才能进行归并！','info');
+	}
+}
+
+/**
  * 编辑任务内容
  */
 function editTask(){
