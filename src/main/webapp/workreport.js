@@ -329,10 +329,17 @@ function removeit(){
 	var row = $('#dg2').datagrid('getSelected');
 	
 	if(row != null){
-		//获得选中行的row index
-		//getRowIndex 	row 	Return the specified row index, the row parameter can be a row record or an id field value.
-		var rowIndex = $('#dg2').datagrid('getRowIndex', row);
-		$('#dg2').datagrid('deleteRow', rowIndex);
+		//当点击确认的时候返回true，点击取消的时候返回false
+		$.messager.confirm('Confirm', '确定要删除这条记录吗？', function(r){
+			if (r){
+				//获得选中行的row index
+				//getRowIndex 	row 	Return the specified row index, the row parameter can be a row record or an id field value.
+				var rowIndex = $('#dg2').datagrid('getRowIndex', row);
+				$('#dg2').datagrid('deleteRow', rowIndex);
+			}
+		});
+	}else{
+		$.messager.alert('提示','请至少选择一条记录！','info');
 	}
 }
 
@@ -392,6 +399,8 @@ function editTask(){
 		$('#task_comment_edit').textbox('setValue', row.comment);
 		
 		
+	}else{
+		$.messager.alert('提示','请至少选择一条记录！','info');
 	}
 }
 
