@@ -5,15 +5,8 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>LayOut</title>
-<script src="${ctx }/easyui/jquery.min.js"
-	type="text/javascript"></script>
-<script src="${ctx }/easyui/jquery.easyui.min.js"
-	type="text/javascript"></script>
-<link href="${ctx }/easyui/themes/default/easyui.css"
-	rel="stylesheet" type="text/css" />
-<link href="${ctx }/easyui/themes/icon.css"
-	rel="stylesheet" type="text/css" />
+<title>yankj12.info</title>
+
 <script language="JavaScript">
 	function addTab(title, url) {
 		if ($('#home').tabs('exists', title)) {

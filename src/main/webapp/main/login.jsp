@@ -14,12 +14,6 @@
                 width:500px;   height:300px;       
         }
     </style>
-    
-    <link rel="stylesheet" type="text/css" href="${ctx }/easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="${ctx }/easyui/themes/icon.css">
-    <script type="text/javascript" src="${ctx }/easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="${ctx }/easyui/jquery.easyui.min.js"></script>
-    
     <script type="text/javascript" src="${ctx }/main/js/md5.js"></script>
 </head>
 <body>

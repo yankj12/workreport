@@ -4,14 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<script src="${ctx }/easyui/jquery.min.js" type="text/javascript"></script>
-<script src="${ctx }/easyui/jquery.easyui.min.js" type="text/javascript"></script>
-
 <script src="${ctx }/main/js/mycommon.js" type="text/javascript"></script>
 <script src="${ctx }/pages/menu/js/listMenu.js" type="text/javascript"></script>
 
-<link href="${ctx }/easyui/themes/default/easyui.css" rel="stylesheet"type="text/css" />
-<link href="${ctx }/easyui/themes/icon.css" rel="stylesheet" type="text/css" />
 	<!-- 下拉列表可能需要的样式 -->
 	<style type="text/css">
 		.item-img{
