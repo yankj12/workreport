@@ -15,10 +15,21 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.yan.access.model.User;
+import com.yan.workreport.common.MongoDBConfig;
 import com.yan.workreport.util.SchameDocumentUtil;
 
 public class UserMongoDaoUtil {
 	
+	private MongoDBConfig dataSource;
+	
+	public MongoDBConfig getDataSource() {
+		return dataSource;
+	}
+
+	public void setDataSource(MongoDBConfig dataSource) {
+		this.dataSource = dataSource;
+	}
+
 	public List<User> findUserDocumentsByCondition(Map<String, Object> condition){
 		List<User> users = null;
 		
@@ -26,10 +37,10 @@ public class UserMongoDaoUtil {
 			
 			//To connect to a single MongoDB instance:
 			//You can explicitly specify the hostname and the port:
-			MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
+			MongoClient mongoClient = new MongoClient( dataSource.getIp() , dataSource.getPort() );
 			
 			//Access a Database
-			MongoDatabase database = mongoClient.getDatabase("manage");
+			MongoDatabase database = mongoClient.getDatabase(dataSource.getDatabase());
 			
 			//Access a Collection
 			MongoCollection<Document> collection = database.getCollection("User");
@@ -99,10 +110,10 @@ public class UserMongoDaoUtil {
 			
 			//To connect to a single MongoDB instance:
 			//You can explicitly specify the hostname and the port:
-			MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
+			MongoClient mongoClient = new MongoClient( dataSource.getIp() , dataSource.getPort() );
 			
 			//Access a Database
-			MongoDatabase database = mongoClient.getDatabase("manage");
+			MongoDatabase database = mongoClient.getDatabase(dataSource.getDatabase());
 			
 			//Access a Collection
 			MongoCollection<Document> collection = database.getCollection("User");

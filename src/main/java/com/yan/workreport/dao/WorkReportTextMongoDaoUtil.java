@@ -15,10 +15,21 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.yan.workreport.common.MongoDBConfig;
 import com.yan.workreport.model.WorkReportText;
 import com.yan.workreport.util.SchameDocumentUtil;
 
 public class WorkReportTextMongoDaoUtil {
+
+	private MongoDBConfig dataSource;
+	
+	public MongoDBConfig getDataSource() {
+		return dataSource;
+	}
+
+	public void setDataSource(MongoDBConfig dataSource) {
+		this.dataSource = dataSource;
+	}
 
 	public static void main(String[] args) throws Exception {
 		WorkReportTextMongoDaoUtil workReportTextMongoDaoUtil = new WorkReportTextMongoDaoUtil();
@@ -38,10 +49,10 @@ public class WorkReportTextMongoDaoUtil {
 
 		//To connect to a single MongoDB instance:
 	    //You can explicitly specify the hostname and the port:
-		MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
+		MongoClient mongoClient = new MongoClient( dataSource.getIp() , dataSource.getPort() );
 
 		//Access a Database
-		MongoDatabase database = mongoClient.getDatabase("manage");
+		MongoDatabase database = mongoClient.getDatabase(dataSource.getDatabase());
 		
 		//Access a Collection
 		MongoCollection<Document> collection = database.getCollection("WorkReportText");
@@ -67,10 +78,10 @@ public class WorkReportTextMongoDaoUtil {
 			
 			//To connect to a single MongoDB instance:
 			//You can explicitly specify the hostname and the port:
-			MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
+			MongoClient mongoClient = new MongoClient( dataSource.getIp() , dataSource.getPort() );
 			
 			//Access a Database
-			MongoDatabase database = mongoClient.getDatabase("manage");
+			MongoDatabase database = mongoClient.getDatabase(dataSource.getDatabase());
 			
 			//Access a Collection
 			MongoCollection<Document> collection = database.getCollection("WorkReportText");
@@ -156,10 +167,10 @@ public class WorkReportTextMongoDaoUtil {
 			
 			//To connect to a single MongoDB instance:
 			//You can explicitly specify the hostname and the port:
-			MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
+			MongoClient mongoClient = new MongoClient( dataSource.getIp() , dataSource.getPort() );
 			
 			//Access a Database
-			MongoDatabase database = mongoClient.getDatabase("manage");
+			MongoDatabase database = mongoClient.getDatabase(dataSource.getDatabase());
 			
 			//Access a Collection
 			MongoCollection<Document> collection = database.getCollection("WorkReportText");
@@ -217,10 +228,10 @@ public class WorkReportTextMongoDaoUtil {
 		if(id!= null && !"".equals(id.trim())) {
 			//To connect to a single MongoDB instance:
 			//You can explicitly specify the hostname and the port:
-			MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
+			MongoClient mongoClient = new MongoClient( dataSource.getIp() , dataSource.getPort() );
 			
 			//Access a Database
-			MongoDatabase database = mongoClient.getDatabase("manage");
+			MongoDatabase database = mongoClient.getDatabase(dataSource.getDatabase());
 			
 			//Access a Collection
 			MongoCollection<Document> collection = database.getCollection("WorkReportText");
@@ -241,10 +252,10 @@ public class WorkReportTextMongoDaoUtil {
 	public void updateWorkReportText(WorkReportText workReportText){
 		//To connect to a single MongoDB instance:
 	    //You can explicitly specify the hostname and the port:
-		MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
+		MongoClient mongoClient = new MongoClient( dataSource.getIp() , dataSource.getPort() );
 
 		//Access a Database
-		MongoDatabase database = mongoClient.getDatabase("manage");
+		MongoDatabase database = mongoClient.getDatabase(dataSource.getDatabase());
 		
 		//Access a Collection
 		MongoCollection<Document> collection = database.getCollection("WorkReportText");
@@ -261,10 +272,10 @@ public class WorkReportTextMongoDaoUtil {
 	public void updateWorkReportTextValidStatus(String id, String validStatus){
 		//To connect to a single MongoDB instance:
 	    //You can explicitly specify the hostname and the port:
-		MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
+		MongoClient mongoClient = new MongoClient( dataSource.getIp() , 27017 );
 
 		//Access a Database
-		MongoDatabase database = mongoClient.getDatabase("manage");
+		MongoDatabase database = mongoClient.getDatabase(dataSource.getDatabase());
 		
 		//Access a Collection
 		MongoCollection<Document> collection = database.getCollection("WorkReportText");

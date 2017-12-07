@@ -1,7 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns ="http://www.springframework.org/schema/beans" 
     xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
     xsi:schemaLocation ="http://www.springframework.org/schema/beans 
-    http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+    http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+    
+    
+    <context:property-placeholder location="classpath:db.properties" ignore-unresolvable="true"/>  
+  
+	<bean id="dataSource" class="com.yan.workreport.common.MongoDBConfig">
+	    <property name="ip" value="${ip}" />  
+	    <property name="port" value="${port}" />  
+	    <property name="database" value="${database}" />  
+	</bean> 
     
     <!-- action -->
     <bean id="loginAction" class="com.yan.access.action.LoginAction">
@@ -30,9 +43,15 @@
     </bean>
     
     <bean id="transCodeMongoDaoUtil" class="com.yan.workreport.dao.TransCodeMongoDaoUtil">
+    	<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
     </bean>
     
     <bean id="workReportTextMongoDaoUtil" class="com.yan.workreport.dao.WorkReportTextMongoDaoUtil">
+    	<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
     </bean>
     
 </beans>
