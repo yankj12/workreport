@@ -7,13 +7,16 @@
     http://www.springframework.org/schema/context 
     http://www.springframework.org/schema/context/spring-context-4.1.xsd">
     
-    
-    <context:property-placeholder location="classpath:db.properties" ignore-unresolvable="true"/>  
+    <context:property-placeholder location="classpath:db.properties" ignore-unresolvable="true"/>
+    <!-- <context:property-placeholder location="WEB-INF/classes/db.properties" ignore-unresolvable="true"/>  -->
   
 	<bean id="dataSource" class="com.yan.workreport.common.MongoDBConfig">
 	    <property name="ip" value="${ip}" />  
 	    <property name="port" value="${port}" />  
-	    <property name="database" value="${database}" />  
+	    <property name="database" value="${database}" />
+	    <property name="dbUserDefined" value="${dbUserDefined}" />
+	    <property name="user" value="${user}" />
+	    <property name="password" value="${password}" />
 	</bean> 
     
     <!-- action -->
@@ -37,9 +40,15 @@
     
     <!-- service -->
     <bean id="userMongoDaoUtil" class="com.yan.access.dao.UserMongoDaoUtil">
+    	<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
     </bean>
     
     <bean id="menuMongoDaoUtil" class="com.yan.access.dao.MenuMongoDaoUtil">
+    	<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
     </bean>
     
     <bean id="transCodeMongoDaoUtil" class="com.yan.workreport.dao.TransCodeMongoDaoUtil">

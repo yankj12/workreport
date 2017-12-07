@@ -1,6 +1,7 @@
 package com.yan.workreport.dao;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +13,8 @@ import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -49,8 +52,9 @@ public class WorkReportTextMongoDaoUtil {
 
 		//To connect to a single MongoDB instance:
 	    //You can explicitly specify the hostname and the port:
-		MongoClient mongoClient = new MongoClient( dataSource.getIp() , dataSource.getPort() );
-
+		MongoCredential credential = MongoCredential.createCredential(dataSource.getUser(), dataSource.getDbUserDefined(), dataSource.getPassword().toCharArray());
+		MongoClient mongoClient = new MongoClient(new ServerAddress(dataSource.getIp(), dataSource.getPort()),
+		                                         Arrays.asList(credential));
 		//Access a Database
 		MongoDatabase database = mongoClient.getDatabase(dataSource.getDatabase());
 		
@@ -78,8 +82,9 @@ public class WorkReportTextMongoDaoUtil {
 			
 			//To connect to a single MongoDB instance:
 			//You can explicitly specify the hostname and the port:
-			MongoClient mongoClient = new MongoClient( dataSource.getIp() , dataSource.getPort() );
-			
+			MongoCredential credential = MongoCredential.createCredential(dataSource.getUser(), dataSource.getDbUserDefined(), dataSource.getPassword().toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataSource.getIp(), dataSource.getPort()),
+			                                         Arrays.asList(credential));
 			//Access a Database
 			MongoDatabase database = mongoClient.getDatabase(dataSource.getDatabase());
 			
@@ -167,8 +172,9 @@ public class WorkReportTextMongoDaoUtil {
 			
 			//To connect to a single MongoDB instance:
 			//You can explicitly specify the hostname and the port:
-			MongoClient mongoClient = new MongoClient( dataSource.getIp() , dataSource.getPort() );
-			
+			MongoCredential credential = MongoCredential.createCredential(dataSource.getUser(), dataSource.getDbUserDefined(), dataSource.getPassword().toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataSource.getIp(), dataSource.getPort()),
+			                                         Arrays.asList(credential));
 			//Access a Database
 			MongoDatabase database = mongoClient.getDatabase(dataSource.getDatabase());
 			
@@ -228,8 +234,9 @@ public class WorkReportTextMongoDaoUtil {
 		if(id!= null && !"".equals(id.trim())) {
 			//To connect to a single MongoDB instance:
 			//You can explicitly specify the hostname and the port:
-			MongoClient mongoClient = new MongoClient( dataSource.getIp() , dataSource.getPort() );
-			
+			MongoCredential credential = MongoCredential.createCredential(dataSource.getUser(), dataSource.getDbUserDefined(), dataSource.getPassword().toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataSource.getIp(), dataSource.getPort()),
+			                                         Arrays.asList(credential));
 			//Access a Database
 			MongoDatabase database = mongoClient.getDatabase(dataSource.getDatabase());
 			
@@ -252,8 +259,9 @@ public class WorkReportTextMongoDaoUtil {
 	public void updateWorkReportText(WorkReportText workReportText){
 		//To connect to a single MongoDB instance:
 	    //You can explicitly specify the hostname and the port:
-		MongoClient mongoClient = new MongoClient( dataSource.getIp() , dataSource.getPort() );
-
+		MongoCredential credential = MongoCredential.createCredential(dataSource.getUser(), dataSource.getDbUserDefined(), dataSource.getPassword().toCharArray());
+		MongoClient mongoClient = new MongoClient(new ServerAddress(dataSource.getIp(), dataSource.getPort()),
+		                                         Arrays.asList(credential));
 		//Access a Database
 		MongoDatabase database = mongoClient.getDatabase(dataSource.getDatabase());
 		
@@ -272,8 +280,9 @@ public class WorkReportTextMongoDaoUtil {
 	public void updateWorkReportTextValidStatus(String id, String validStatus){
 		//To connect to a single MongoDB instance:
 	    //You can explicitly specify the hostname and the port:
-		MongoClient mongoClient = new MongoClient( dataSource.getIp() , 27017 );
-
+		MongoCredential credential = MongoCredential.createCredential(dataSource.getUser(), dataSource.getDbUserDefined(), dataSource.getPassword().toCharArray());
+		MongoClient mongoClient = new MongoClient(new ServerAddress(dataSource.getIp(), dataSource.getPort()),
+		                                         Arrays.asList(credential));
 		//Access a Database
 		MongoDatabase database = mongoClient.getDatabase(dataSource.getDatabase());
 		
