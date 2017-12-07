@@ -57,6 +57,7 @@ public class MenuMongoDaoUtil {
 		if(doc.get("_id") != null){
 			id = doc.get("_id").toString();
 		}
+		mongoClient.close();
 		return id;
 	}
 	
@@ -134,6 +135,7 @@ public class MenuMongoDaoUtil {
 					menus.add(menu);
 				}
 			}
+			mongoClient.close();
 		}
 		
 		return menus;
@@ -185,7 +187,7 @@ public class MenuMongoDaoUtil {
 			}else{
 				count = collection.count();
 			}
-			
+			mongoClient.close();
 		}
 		
 		return count;
@@ -209,6 +211,7 @@ public class MenuMongoDaoUtil {
 			if(docs != null && docs.size() > 0) {
 				menu = (Menu)SchameDocumentUtil.documentToSchame(docs.get(0), Menu.class);
 			}
+			mongoClient.close();
 		}
 		
 		return menu;
@@ -232,7 +235,7 @@ public class MenuMongoDaoUtil {
 		 
 		 //Update a Document
 		 collection.updateOne(Filters.eq("_id", new ObjectId(id)), new Document("$set", doc));
-		 
+		 mongoClient.close();
 	}
 	
 	public void updateMenu(Menu menu){
@@ -253,7 +256,7 @@ public class MenuMongoDaoUtil {
 		 
 		 //Update a Document
 		 collection.updateOne(Filters.eq("_id", doc.get("_id")), new Document("$set", doc));
-		 
+		 mongoClient.close();
 	}
 	
 }

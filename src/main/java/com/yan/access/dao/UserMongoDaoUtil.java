@@ -102,6 +102,7 @@ public class UserMongoDaoUtil {
 					users.add(user);
 				}
 			}
+			mongoClient.close();
 		}
 		
 		return users;
@@ -149,7 +150,7 @@ public class UserMongoDaoUtil {
 			}else{
 				count = collection.count();
 			}
-			
+			mongoClient.close();
 		}
 		
 		return count;

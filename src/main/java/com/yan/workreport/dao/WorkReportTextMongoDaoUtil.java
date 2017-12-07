@@ -72,6 +72,7 @@ public class WorkReportTextMongoDaoUtil {
 		if(doc.get("_id") != null){
 			id = doc.get("_id").toString();
 		}
+		mongoClient.close();
 		return id;
 	}
 	
@@ -160,6 +161,7 @@ public class WorkReportTextMongoDaoUtil {
 					workReportTexts.add(workReportText);
 				}
 			}
+			mongoClient.close();
 		}
 		
 		return workReportTexts;
@@ -223,7 +225,7 @@ public class WorkReportTextMongoDaoUtil {
 			}else{
 				count = collection.count();
 			}
-			
+			mongoClient.close();
 		}
 		
 		return count;
@@ -247,6 +249,7 @@ public class WorkReportTextMongoDaoUtil {
 			if(docs != null && docs.size() > 0) {
 				workReportText = (WorkReportText)SchameDocumentUtil.documentToSchame(docs.get(0), WorkReportText.class);
 			}
+			mongoClient.close();
 		}
 		
 		return workReportText;
@@ -274,7 +277,7 @@ public class WorkReportTextMongoDaoUtil {
 		 
 		 //Update a Document
 		 collection.updateOne(Filters.eq("_id", doc.get("_id")), new Document("$set", doc));
-		 
+		 mongoClient.close();
 	}
 	
 	public void updateWorkReportTextValidStatus(String id, String validStatus){
@@ -295,6 +298,6 @@ public class WorkReportTextMongoDaoUtil {
 		 
 		 //Update a Document
 		 collection.updateOne(Filters.eq("_id", new ObjectId(id)), new Document("$set", doc));
-		 
+		 mongoClient.close();
 	}
 }

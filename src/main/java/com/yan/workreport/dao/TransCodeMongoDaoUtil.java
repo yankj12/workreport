@@ -57,6 +57,7 @@ public class TransCodeMongoDaoUtil {
 		if(doc.get("_id") != null){
 			id = doc.get("_id").toString();
 		}
+		mongoClient.close();
 		return id;
 	}
 	
@@ -146,6 +147,7 @@ public class TransCodeMongoDaoUtil {
 					transCodes.add(transCode);
 				}
 			}
+			mongoClient.close();
 		}
 		
 		return transCodes;
@@ -209,7 +211,7 @@ public class TransCodeMongoDaoUtil {
 			}else{
 				count = collection.count();
 			}
-			
+			mongoClient.close();
 		}
 		
 		return count;
@@ -259,6 +261,7 @@ public class TransCodeMongoDaoUtil {
 					transCodes.add(transCode);
 				}
 			}
+			mongoClient.close();
 		}
 		
 		return transCodes;
@@ -282,6 +285,7 @@ public class TransCodeMongoDaoUtil {
 			if(docs != null && docs.size() > 0) {
 				transCode = (TransCode)SchameDocumentUtil.documentToSchame(docs.get(0), TransCode.class);
 			}
+			mongoClient.close();
 		}
 		
 		return transCode;
@@ -305,7 +309,7 @@ public class TransCodeMongoDaoUtil {
 		 
 		 //Update a Document
 		 collection.updateOne(Filters.eq("_id", doc.get("_id")), new Document("$set", doc));
-		 
+		 mongoClient.close();
 	}
 	
 	public void updateTransCodeValidStatus(String id, String validStatus){
@@ -326,6 +330,6 @@ public class TransCodeMongoDaoUtil {
 		 
 		 //Update a Document
 		 collection.updateOne(Filters.eq("_id", new ObjectId(id)), new Document("$set", doc));
-		 
+		 mongoClient.close(); 
 	}
 }
