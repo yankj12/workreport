@@ -87,6 +87,6 @@
             </configuration>
         </plugin>
     </plugins>
-    <finalName>workreport-struts2</finalName>
+    <finalName>workreport</finalName>
   </build>
 </project>
