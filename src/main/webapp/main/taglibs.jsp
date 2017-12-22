@@ -5,8 +5,9 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
 <!-- set cdn here -->
-<!-- property cdn: ${ctx} or "http://www.yankj12.info/Public/js" -->
-<c:set var="cdn" value="http://www.yankj12.info/Public/js"/>
+<!-- property cdn: ${ctx} or "//www.yankj12.info/Public/js" -->
+<!-- 自适应http和https协议 -->
+<c:set var="cdn" value="//www.yankj12.info/Public/js"/>
 
 <script type="text/javascript">
   var contextRootPath = "${ctx}";
