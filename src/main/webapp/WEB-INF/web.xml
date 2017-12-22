@@ -30,8 +30,8 @@
 	    <param-name>ignoreKey</param-name>
 	    <!-- 以/结尾，认为是一个文件夹或者路径前缀，所以要判断是否包含;不是以/结尾，认为是特定的一个url，所以要判断url是否相等 -->
 	    <param-value>
-	      /workreport-struts2/main/js/md5.js,
-	      /workreport-struts2/easyui/
+	      /workreport/main/js/md5.js,
+	      /workreport/easyui/
 	    </param-value>
 	  </init-param>
 	</filter>
