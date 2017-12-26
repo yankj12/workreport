@@ -7,12 +7,17 @@
    <constant name="struts.action.extension" value="do" />
    
    <package name="workreport" extends="json-default" namespace="/workreport">
-   
+ 		<global-results>
+			<result name="json" type="json">
+            	<param name="excludeProperties">
+					.*Util, .*DaoUtil, .*Service, .*Config, userMsgInfo
+				</param>
+            </result> 
+		</global-results>  
       <!-- <action name="*" 
             class="com.yan.workreport.controller.WorkReportAction" 
             method="{1}">
             <result name="success">/workreport.jsp</result>
-            <result name="json" type="json"></result> 
       </action> -->
   
   	<action name="workreport" 
@@ -24,33 +29,36 @@
             class="workReportAction" 
             method="findWorkReports">
             <result name="success">/workreport.jsp</result>
-            <result name="json" type="json"></result> 
       </action>
       
       <action name="findUniqueWorkReport" 
             class="workReportAction" 
             method="findUniqueWorkReport">
             <result name="success">/workreport.jsp</result>
-            <result name="json" type="json"></result> 
       </action>
       
       <action name="saveWorkReport" 
             class="workReportAction" 
             method="saveWorkReport">
             <result name="success">/workreport.jsp</result>
-            <result name="json" type="json"></result> 
       </action>
 
 	<action name="deleteWorkReport" 
             class="workReportAction" 
             method="deleteWorkReport">
             <result name="success">/workreport.jsp</result>
-            <result name="json" type="json"></result> 
       </action>
    </package>
    
    <package name="login" extends="json-default" namespace="/login">
-		
+ 		<global-results>
+			<result name="json" type="json">
+            	<param name="excludeProperties">
+					.*Util, .*DaoUtil, .*Service, .*Config, userMsgInfo
+				</param>
+            </result> 
+		</global-results>
+				
 		<action name="prepareLogin" class="loginAction"
 			method="prepareLogin">
 			<result name="success">/main/login.jsp</result>
@@ -70,12 +78,10 @@
 		
 		<action name="checkUserUnique" class="loginAction"
 			method="checkUserUnique">
-			<result name="json" type="json"></result> 
 		</action>
 		
 		<!-- <action name="registeUser" class="com.yan.access.action.LoginAction"
 			method="registeUser">
-			<result name="json" type="json"></result> 
 		</action> -->
 		
 	</package>

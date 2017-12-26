@@ -7,7 +7,14 @@
 
 	<constant name="struts.devMode" value="true" />
 	<package name="menu" extends="json-default" namespace="/menu">
-	
+		<global-results>
+			<result name="json" type="json">
+            	<param name="excludeProperties">
+					.*Util, .*DaoUtil, .*Service, .*Config, userMsgInfo
+				</param>
+            </result> 
+		</global-results>
+			
 		<action name="listMenu" 
             class="menuAction" 
             method="listMenu">
@@ -17,13 +24,11 @@
 		<action name="showMenus" 
             class="menuAction" 
             method="showMenus">
-            <result name="json" type="json"></result> 
 		</action>
 		
 		<action name="queryMenu" 
             class="menuAction" 
             method="queryMenu">
-            <result name="json" type="json"></result> 
 		</action>
 		
 		<action name="editMenu" 
@@ -35,13 +40,11 @@
 		<action name="deleteMenu" 
             class="menuAction" 
             method="deleteMenu">
-            <result name="json" type="json"></result> 
 		</action>
 		
 		<action name="saveMenu" 
             class="menuAction" 
             method="saveMenu">
-            <result name="json" type="json"></result> 
 		</action>
 		
 	</package>
