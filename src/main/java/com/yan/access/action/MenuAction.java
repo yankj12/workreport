@@ -28,7 +28,7 @@ public class MenuAction extends ActionSupport{
 	 * 应用代码
 	 * 适用于，代码转换等模块
 	 */
-	public static final String APP_CODE = "manage";
+	private String syscode;
 	
 	/**
 	 * 成功失败标志位
@@ -93,7 +93,7 @@ public class MenuAction extends ActionSupport{
 		
 			//根据条件查出来对应的菜单
 			Map<String, Object> map = new HashMap<>();
-			map.put("syscode", APP_CODE);
+			map.put("syscode", syscode);
 			map.put("validStatus", '1');
 			
 			//为0表示只能查询非管理员的菜单，为1表示所有的菜单都可以查询
@@ -487,6 +487,14 @@ public class MenuAction extends ActionSupport{
 
 	public void setMenuMongoDaoUtil(MenuMongoDaoUtil menuMongoDaoUtil) {
 		this.menuMongoDaoUtil = menuMongoDaoUtil;
+	}
+
+	public String getSyscode() {
+		return syscode;
+	}
+
+	public void setSyscode(String syscode) {
+		this.syscode = syscode;
 	}
 	
 }
