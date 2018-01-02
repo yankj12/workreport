@@ -30,6 +30,7 @@
     	<property name="menuMongoDaoUtil">
 			<ref local="menuMongoDaoUtil" />
 		</property>
+		<property name="syscode" value="${syscode}" />
     </bean>
     
     <bean id="workReportAction" class="com.yan.workreport.controller.WorkReportAction">
@@ -49,7 +50,6 @@
     	<property name="dataSource">
 			<ref local="dataSource" />
 		</property>
-		<property name="syscode" value="${syscode}" />
     </bean>
     
     <bean id="transCodeMongoDaoUtil" class="com.yan.workreport.dao.TransCodeMongoDaoUtil">
