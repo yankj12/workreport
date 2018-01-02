@@ -2,12 +2,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
+
+<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%@ page import="org.springframework.context.ApplicationContext"%>
+<%@ page import="com.yan.common.schema.ApplicationConfig"%>
+<%
+	ServletContext sc = this.getServletConfig().getServletContext();
+	ApplicationContext ac2 = WebApplicationContextUtils.getWebApplicationContext(sc);
+	// 要获取的对象 serv = (要获取的对象) ac2.getBean("spring配置文件中的id");
+	ApplicationConfig applicationConfig = (ApplicationConfig)ac2.getBean("applicationConfig");
+	String cdn = applicationConfig.getCdn();
+%>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
-<!-- set cdn here -->
-<!-- property cdn: ${ctx} or "//www.yankj12.info/Public/js" -->
-<!-- ����Ӧhttp��httpsЭ�� -->
-<c:set var="cdn" value="//www.yankj12.info/Public/js"/>
+<c:set var="cdn" value="<%=cdn %>"/>
 
 <script type="text/javascript">
   var contextRootPath = "${ctx}";
