@@ -82,7 +82,7 @@
             <tr>
             	<td><label>菜单url</label></td>
 				<td colspan="7">
-					<input name="menu.url" class="easyui-textbox" value="${menu.url }" style="width:100%"/>
+					<input id="menu_url_edit" name="menu.url" class="easyui-textbox" value="${menu.url }" style="width:100%" data-options="onChange:checkMenuUrlOnChange"/>
 				</td>
 				<td><label>是否管理员菜单</label></td>
 				<td colspan="3">

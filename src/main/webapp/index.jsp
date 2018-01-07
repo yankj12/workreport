@@ -76,7 +76,13 @@
 		        				for(var j=0;j<subMenus.length;j++){
 		        					var subMenuName = subMenus[j].menuName;
 		        					var subMenuUrl = subMenus[j].url;
-		        					var innerHtmlStr = innerHtmlStr + '<li><a href="#" onclick="addTab(\'' + subMenuName +'\',\'' + contextRootPath + '/' + subMenuUrl + '\')">' + subMenuName + '</a></li>';
+
+		        					// 如果subMenuUrl不是以/开头，补充上/
+		        					if(subMenuUrl != null && subMenuUrl != '' && subMenuUrl.charAt(0) != '/'){
+		        						subMenuUrl = '/' + subMenuUrl;
+		        					}
+		        					
+		        					var innerHtmlStr = innerHtmlStr + '<li><a href="#" onclick="addTab(\'' + subMenuName +'\',\'' + contextRootPath + subMenuUrl + '\')">' + subMenuName + '</a></li>';
 		        				}
 		        			}
 							
