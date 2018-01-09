@@ -102,7 +102,7 @@
 <table id="dg" title="查询结果" class="easyui-datagrid" style="width:100%;height:auto;"
 		url="${ctx }/workreport/findWorkReports.do?validStatus=1"
 		toolbar="#toolbar"
-		rownumbers="true" pagination="true" fitColumns="true" singleSelect="true">
+		rownumbers="true" pagination="true" fitColumns="true" singleSelect="false">
 		<!-- table增加了pagination="true"属性，就增加了底部的分页工具栏 -->
 	<thead>
 		<tr>
@@ -112,6 +112,7 @@
 			<th field="title" width="30">标题</th>
 			<th field="type" width="30" formatter="formatWorkReportType">日志类型</th>
 			<th field="dataType" width="30" formatter="formatWorkReportDataType">数据类型</th>
+			<th data-options="field:'workText',hidden:true">日志内容</th>
 			<th field="projectCode" width="10">项目代码</th>
 			<th field="projectName" width="30">项目名称</th>
 			<th field="writerName" width="30">日志编写人</th>
@@ -125,6 +126,7 @@
 	<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newRecord('编写工作日志')">编写工作日志</a>
 	<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editRecord('修改工作日志')">修改工作日志</a>
 	<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyRecord()">删除工作日志</a>
+	<a href="#" class="easyui-linkbutton" plain="true" onclick="viewSelectedRecords('查看选中日志')">查看选中日志</a>
 </div>
 	<!-- 下面dlg是为了有新增用户界面 -->
 	<div id="dlg" class="easyui-dialog" style="width:800px;height:auto;padding:0px 0px"
@@ -325,6 +327,22 @@
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="closeTask()" style="width:90px">关闭</a>
 	</div>
 	
+	
+	<!-- 下面dlg是为了任务编辑界面 -->
+	<div id="dlg3" class="easyui-dialog" style="width:800px;height:auto;padding:0px 0px;overflow:hidden;"
+			closed="true" buttons="#dlg3-buttons">
+		<table cellpadding="5px" style="width:100%;">
+			<tr>
+				<td colspan="4">
+					<input id="workreport_view" class="easyui-textbox" data-options="multiline:true" value="" style="width:98%;height:600px">
+				</td>
+			</tr>
+		</table>
+	</div>
+	<!-- 下面dlg-buttons是为了让新增用户页面有保存和取消按钮 -->
+	<div id="dlg3-buttons">
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="closeWorkReportView()" style="width:90px">关闭</a>
+	</div>
 	<script type="text/javascript">
 
 	

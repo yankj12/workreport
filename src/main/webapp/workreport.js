@@ -96,6 +96,11 @@ function newRecord(title){
 
 
 function editRecord(title){
+	var rows = $('#dg').datagrid('getSelections');
+	if (rows != null && rows.length != null && rows.length > 1){
+		$.messager.alert('提示','不允许选择多条记录进行修改');
+		return false;
+	}
 	
 	var row = $('#dg').datagrid('getSelected');    //这一步可以改造为从后台异步获取数据
 	
@@ -159,8 +164,57 @@ function editRecord(title){
 	}
 }
 
+function viewSelectedRecords(title){
+	
+	var rows = $('#dg').datagrid('getSelections');
+	if (rows != null && rows.length != null && rows.length > 0){
+		
+		// 组装数据
+		// yyyyMMdd-团队日志、个人日志-数据类型-日志编写人
+		// 日志内容
+		
+		var reportText = "";
+		for (var i = 0; i < rows.length; i++) {
+			var day = rows[i].day;
+			var type = formatWorkReportType(rows[i].type);
+			var dataType = formatWorkReportDataType(rows[i].dataType);
+			var writerName = rows[i].writerName == null ? '' : rows[i].writerName;
+			var workText = rows[i].workText;
+			
+			reportText = reportText + day + '-' + type + '-' + dataType + '-' + writerName + '\n' + workText;
+			
+			if(i != (rows.length - 1)){
+				reportText = reportText + '\n\n\n';
+			}
+		}
+		
+		// 打开界面
+		$('#dlg3').dialog('open').dialog('setTitle', title);
+		
+		// 填充数据
+		$('#workreport_view').textbox('setValue', reportText);
+		
+	}else{
+		//(提示框标题，提示信息)
+		$.messager.alert('提示','请至少选择一条记录');
+	}
+} 
+
+function closeWorkReportView(){
+	//关闭窗口
+	$('#dlg3').dialog('close');
+	$('#workreport_view').textbox('setValue', '');
+}
+
 
 function destroyRecord(){
+	
+	var rows = $('#dg').datagrid('getSelections');
+	if (rows != null && rows.length != null && rows.length > 1){
+		$.messager.alert('提示','不允许选择多条记录进行删除');
+		return false;
+	}
+	
 	var row = $('#dg').datagrid('getSelected');
 	if (row){
 		$.messager.confirm('Confirm','确定删除这条记录吗？',function(r){
