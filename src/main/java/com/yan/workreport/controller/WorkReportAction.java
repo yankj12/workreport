@@ -290,6 +290,20 @@ public class WorkReportAction extends ActionSupport{
     		reportText.setComment((String)map.get("comment"));
     		reportText.setValidStatus("1");
     		
+    		// 避免短时间内因为网络相应慢，多次点击进而多次保存的问题
+    		if(editType != null && "new".equals(editType.trim())) {
+    			Map<String, Object> condition = new HashMap<String, Object>();
+    			condition.put("day", day);
+    			condition.put("writerName", writerName);
+    			condition.put("type", type);
+    			List<WorkReportText> workReportTexts = workReportTextMongoDaoUtil.findWorkReportTextDocumentsByCondition(condition);
+    			if(workReportTexts != null && workReportTexts.size() > 0){
+    				id = workReportTexts.get(0).getId();
+    				reportText.setId(id);
+    				editType = "edit";
+    			}
+    		}
+    		
     		if(editType != null && "new".equals(editType.trim())) {
     			reportText.setInsertTime(new Date());
     			reportText.setUpdateTime(new Date());
