@@ -29,6 +29,9 @@
     	<property name="userMongoDaoUtil">
 			<ref local="userMongoDaoUtil" />
 		</property>
+		<property name="userAccessService">
+			<ref local="userAccessService" />
+		</property>
     </bean>
     
     <bean id="menuAction" class="com.yan.access.action.MenuAction">
@@ -69,4 +72,6 @@
 		</property>
     </bean>
     
+    <bean id="userAccessService" class="com.yan.access.service.impl.UserAccessServiceImpl">
+    </bean>
 </beans>

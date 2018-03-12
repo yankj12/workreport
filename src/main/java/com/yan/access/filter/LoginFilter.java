@@ -10,11 +10,15 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.opensymphony.xwork2.ActionContext;
+import com.yan.access.service.facade.UserAccessService;
+import com.yan.access.service.impl.UserAccessServiceImpl;
+import com.yan.access.vo.ResponseVo;
 import com.yan.access.vo.UserMsgInfo;
 
 public class LoginFilter implements Filter{
@@ -42,6 +46,8 @@ public class LoginFilter implements Filter{
         HttpServletRequest servletRequest = (HttpServletRequest) request;
         HttpServletResponse servletResponse = (HttpServletResponse) response;
         HttpSession httpSession = servletRequest.getSession();
+        
+        UserAccessService userAccessService = new UserAccessServiceImpl();
         
         // 获得用户请求的URI
         String uri = servletRequest.getRequestURI();
@@ -87,14 +93,33 @@ public class LoginFilter implements Filter{
         String contextPath = servletRequest.getContextPath();
         
 		boolean isUserLogin = false;
-		if(httpSession != null){
-			String sessID = httpSession.getId();
-			if(httpSession.getAttribute(sessID) != null){
-				UserMsgInfo userMsgInfo = (UserMsgInfo)httpSession.getAttribute(sessID);
-				servletRequest.setAttribute("userMsgInfo", userMsgInfo);
-				String userCode = userMsgInfo.getUserCode();
+		String sessID = httpSession.getId();
+		
+		// find tickets from cookies
+		String ticket = null;
+		Cookie[] cookies = servletRequest.getCookies();
+		if (cookies != null) {
+            for (Cookie cookie : cookies) {
+            	String name = cookie.getName();
+            	if("ticket".equals(name)) {
+            		ticket = cookie.getValue();
+            		break;
+            	}
+            }
+        }
+		if(ticket == null || "".equals(ticket)) {
+			ticket = sessID;
+		}
+		
+		try {
+			ResponseVo responseVo = userAccessService.getSession(ticket);
+			if(responseVo.isSuccess()) {
 				isUserLogin = true;
+			}else {
+				isUserLogin = false;
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		if(isUserLogin){

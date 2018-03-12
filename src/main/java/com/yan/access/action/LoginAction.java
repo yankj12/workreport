@@ -2,19 +2,20 @@ package com.yan.access.action;
 
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.struts2.ServletActionContext;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.yan.access.dao.UserMongoDaoUtil;
 import com.yan.access.model.User;
+import com.yan.access.service.facade.UserAccessService;
+import com.yan.access.vo.ResponseVo;
 import com.yan.access.vo.UserMsgInfo;
 
 public class LoginAction extends ActionSupport{
@@ -31,6 +32,8 @@ public class LoginAction extends ActionSupport{
 	private String errorMsg;
 	
 	private UserMongoDaoUtil userMongoDaoUtil;
+	
+	private UserAccessService userAccessService;
 	
 	private UserMsgInfo userMsgInfo;
 	
@@ -49,81 +52,108 @@ public class LoginAction extends ActionSupport{
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String ip = request.getRemoteAddr();
 		
-		HttpSession httpSession = request.getSession();
+		//HttpSession httpSession = request.getSession();
 		String sessID = request.getSession().getId();
 		
-		if(httpSession != null){
-			if(httpSession.getAttribute(sessID) != null){
-				userMsgInfo = (UserMsgInfo)httpSession.getAttribute(sessID);
-				String userCode = userMsgInfo.getUserCode();
-				return "success";
-			}else{
-				//根据用户名密码进行登录
-				if(userCode == null || password == null 
-						|| "".equals(userCode.trim()) || "".equals(password.trim())){
-					errorMsg = "用户名和密码不能为空！";
-					
-					
-					return "login";
-				}
-				String passwordMD5 = DigestUtils.md5Hex(password);
-				
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("userCode", userCode);
-				map.put("pswd", passwordMD5);
-				map.put("validStatus", "1");    //只查询有效用户
-				map.put("auditStatus", "2");    //只查询审批通过用户
-				
-				
-				List<User> users = userMongoDaoUtil.findUserDocumentsByCondition(map);
-				
-				User user = null;
-				if(users != null && users.size() == 1){
-					user = users.get(0);
-				}
-				
-				//根据userCode和password去库里查
-				//User user = userService.findUserByPK(userCode);
-				
-				//查到有数据，则向session中加入
-				if(user != null){
-					userMsgInfo = new UserMsgInfo();
-					userMsgInfo.setUserCode(user.getUserCode());
-					userMsgInfo.setUserCName(user.getUserName());
-					userMsgInfo.setEmail(user.getEmail());
-					//userMsgInfo.setTeamCode(user.getTeam());
-					userMsgInfo.setIp(ip);
-					
-					httpSession.setAttribute(sessID, userMsgInfo);
-					
-					return "success";
-				}else{
-					//没有查到数据，则跳转到登陆界面
-					errorMsg = "用户名或密码不正确！";
-					
-					return "login";
-				}
-			}	
+		// find tickets from cookies
+		String ticket = null;
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+            for (Cookie cookie : cookies) {
+            	String name = cookie.getName();
+            	if("ticket".equals(name)) {
+            		ticket = cookie.getValue();
+            		break;
+            	}
+            }
+        }
+		if(ticket == null || "".equals(ticket)) {
+			ticket = sessID;
 		}
 		
+		try {
+			// 先检查下session中是否存在tickets
+			ResponseVo responseVo = userAccessService.getSession(ticket);
+			
+			if(responseVo != null){
+				if(responseVo.isSuccess()){
+					userMsgInfo = responseVo.getUserMsgInfo();
+					
+					String userCode = userMsgInfo.getUserCode();
+					return "success";
+				}else{
+					//根据用户名密码进行登录
+					if(userCode == null || password == null 
+							|| "".equals(userCode.trim()) || "".equals(password.trim())){
+						errorMsg = "用户名和密码不能为空！";
+						
+						
+						return "login";
+					}
+					String passwordMD5 = DigestUtils.md5Hex(password);
+					
+					try {
+						ResponseVo responseVo2 = userAccessService.checkUserAuth(userCode, passwordMD5, ticket);
+						if(responseVo2.isSuccess()) {
+							success = true;
+							//errorMsg = "用户名或密码不正确！";
+							errorMsg = responseVo2.getErrorMsg();
+							userMsgInfo = responseVo2.getUserMsgInfo();
+							
+							// 将tickets写入到父级域名的cookie中
+							// put tickets in cookie
+							Cookie ticketsCookie = new Cookie("ticket", ticket);
+							ticketsCookie.setPath("/");
+					        ServletActionContext.getResponse().addCookie(ticketsCookie);
+					        
+							return "success";
+						}else {
+							success = false;
+							//errorMsg = "用户名或密码不正确！";
+							errorMsg = responseVo.getErrorMsg();
+							return "login";
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}	
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "success";
 	}
 	
 	public String logout(){
 		HttpServletRequest request = ServletActionContext.getRequest();
-		String ip = request.getRemoteAddr();
-		HttpSession httpSession = request.getSession();
 		String sessID = request.getSession().getId();
-		//从session中获取userCode
-		if(httpSession != null){
-			if(httpSession.getAttribute(sessID) != null){
-				userMsgInfo = (UserMsgInfo)httpSession.getAttribute(sessID);
-				if(userMsgInfo != null && userMsgInfo.getUserCode() != null){
-					userCode = userMsgInfo.getUserCode().trim();
-				}
-			}
+		
+		// find tickets from cookies
+		String ticket = null;
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+            for (Cookie cookie : cookies) {
+            	String name = cookie.getName();
+            	if("ticket".equals(name)) {
+            		ticket = cookie.getValue();
+            		break;
+            	}
+            }
+        }
+		if(ticket == null || "".equals(ticket)) {
+			ticket = sessID;
 		}
-		httpSession.removeAttribute(sessID);
+		
+		try {
+			ResponseVo responseVo = userAccessService.invalidateSession(ticket);
+			if(responseVo.isSuccess()) {
+				
+			}else {
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return "login";
 	}
@@ -311,6 +341,14 @@ public class LoginAction extends ActionSupport{
 
 	public void setUserMongoDaoUtil(UserMongoDaoUtil userMongoDaoUtil) {
 		this.userMongoDaoUtil = userMongoDaoUtil;
+	}
+
+	public UserAccessService getUserAccessService() {
+		return userAccessService;
+	}
+
+	public void setUserAccessService(UserAccessService userAccessService) {
+		this.userAccessService = userAccessService;
 	}
 	
 }
