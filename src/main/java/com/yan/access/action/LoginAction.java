@@ -50,7 +50,7 @@ public class LoginAction extends ActionSupport{
 		//获取Session对象
 		//获取sessionid
 		HttpServletRequest request = ServletActionContext.getRequest();
-		String ip = request.getRemoteAddr();
+		//String ip = request.getRemoteAddr();
 		
 		//HttpSession httpSession = request.getSession();
 		String sessID = request.getSession().getId();
@@ -75,53 +75,61 @@ public class LoginAction extends ActionSupport{
 			// 先检查下session中是否存在tickets
 			ResponseVo responseVo = userAccessService.getSession(ticket);
 			
-			if(responseVo != null){
-				if(responseVo.isSuccess()){
-					userMsgInfo = responseVo.getUserMsgInfo();
+			if(responseVo != null && responseVo.isSuccess()){
+				userMsgInfo = responseVo.getUserMsgInfo();
+				
+				String userCode = userMsgInfo.getUserCode();
+				errorMsg = null;
+				return "success";
+			}else{
+				// 如果ticket不存在登陆记录，那么我们应该讲ticket更新成新的，否则就会出现一个ticket一直用的情况
+				ticket = sessID;
+				//根据用户名密码进行登录
+				if(userCode == null || password == null 
+						|| "".equals(userCode.trim()) || "".equals(password.trim())){
+					errorMsg = "用户名和密码不能为空！";
 					
-					String userCode = userMsgInfo.getUserCode();
-					return "success";
-				}else{
-					//根据用户名密码进行登录
-					if(userCode == null || password == null 
-							|| "".equals(userCode.trim()) || "".equals(password.trim())){
-						errorMsg = "用户名和密码不能为空！";
+					
+					return "login";
+				}
+				String passwordMD5 = DigestUtils.md5Hex(password);
+				
+				try {
+					ResponseVo responseVo2 = userAccessService.checkUserAuth(userCode, passwordMD5, ticket);
+					if(responseVo2 != null && responseVo2.isSuccess()) {
+						success = true;
+						//errorMsg = "用户名或密码不正确！";
+						errorMsg = responseVo2.getErrorMsg();
+						userMsgInfo = responseVo2.getUserMsgInfo();
 						
-						
+						// 将tickets写入到父级域名的cookie中
+						// put tickets in cookie
+						Cookie ticketsCookie = new Cookie("ticket", ticket);
+						ticketsCookie.setPath("/");
+				        ServletActionContext.getResponse().addCookie(ticketsCookie);
+				        
+						return "success";
+					}else {
+						success = false;
+						//errorMsg = "用户名或密码不正确！";
+						errorMsg = responseVo.getErrorMsg();
 						return "login";
 					}
-					String passwordMD5 = DigestUtils.md5Hex(password);
-					
-					try {
-						ResponseVo responseVo2 = userAccessService.checkUserAuth(userCode, passwordMD5, ticket);
-						if(responseVo2.isSuccess()) {
-							success = true;
-							//errorMsg = "用户名或密码不正确！";
-							errorMsg = responseVo2.getErrorMsg();
-							userMsgInfo = responseVo2.getUserMsgInfo();
-							
-							// 将tickets写入到父级域名的cookie中
-							// put tickets in cookie
-							Cookie ticketsCookie = new Cookie("ticket", ticket);
-							ticketsCookie.setPath("/");
-					        ServletActionContext.getResponse().addCookie(ticketsCookie);
-					        
-							return "success";
-						}else {
-							success = false;
-							//errorMsg = "用户名或密码不正确！";
-							errorMsg = responseVo.getErrorMsg();
-							return "login";
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}	
+				} catch (Exception e) {
+					e.printStackTrace();
+					errorMsg = e.getMessage();
+				}
+				success = false;
+				//errorMsg = "用户名或密码不正确！";
+				
+				return "login";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			errorMsg = e.getMessage();
 		}
-		return "success";
+		// 缺省的是进入登录界面
+		return "login";
 	}
 	
 	public String logout(){

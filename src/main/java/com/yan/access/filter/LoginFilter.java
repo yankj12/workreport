@@ -113,7 +113,7 @@ public class LoginFilter implements Filter{
 		
 		try {
 			ResponseVo responseVo = userAccessService.getSession(ticket);
-			if(responseVo.isSuccess()) {
+			if(responseVo != null && responseVo.isSuccess()) {
 				isUserLogin = true;
 			}else {
 				isUserLogin = false;
