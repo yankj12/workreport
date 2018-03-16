@@ -2,11 +2,11 @@ package com.yan.access.filter;
 
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -15,17 +15,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.opensymphony.xwork2.ActionContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.yan.access.service.facade.UserAccessService;
-import com.yan.access.service.impl.UserAccessServiceImpl;
 import com.yan.access.vo.ResponseVo;
-import com.yan.access.vo.UserMsgInfo;
 
 public class LoginFilter implements Filter{
 
 	
     private String ignoreKeys[];
     private int ignoreKeyCount;
+    
+    // spring上下文
+    private WebApplicationContext context;
     
 	public void destroy() {
 		// TODO Auto-generated method stub
@@ -47,7 +50,7 @@ public class LoginFilter implements Filter{
         HttpServletResponse servletResponse = (HttpServletResponse) response;
         HttpSession httpSession = servletRequest.getSession();
         
-        UserAccessService userAccessService = new UserAccessServiceImpl();
+        UserAccessService userAccessService = (UserAccessService) context.getBean("userAccessService");
         
         // 获得用户请求的URI
         String uri = servletRequest.getRequestURI();
@@ -159,7 +162,11 @@ public class LoginFilter implements Filter{
             }
         }
         ignoreKeyCount = ignoreKeys.length;
-		
+        
+        // 获取spring上下文
+        ServletContext servletContext = filterConfig.getServletContext();  
+        context = WebApplicationContextUtils.getWebApplicationContext(servletContext);  
+        
 	}
 
 }
