@@ -23,7 +23,13 @@
 	    <property name="user" value="${mongodb.user}" />
 	    <property name="password" value="${mongodb.password}" />
 	</bean> 
-    
+
+    <bean id="ssoServerConfig" class="com.yan.access.schema.SsoServerConfig">
+	    <property name="protocol" value="${ssoServer.protocol}" />
+	    <property name="ip" value="${ssoServer.ip}" />  
+	    <property name="port" value="${ssoServer.port}" />  
+	</bean>
+	    
     <!-- action -->
     <bean id="loginAction" class="com.yan.access.action.LoginAction">
     	<property name="userMongoDaoUtil">

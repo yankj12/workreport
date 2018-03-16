@@ -1,2 +1,7 @@
 syscode=workreport
 cdn=//www.test.com/Public/js
+
+# sso-server config
+ssoServer.protocol=http
+ssoServer.ip=localhost
+ssoServer.port=8080
