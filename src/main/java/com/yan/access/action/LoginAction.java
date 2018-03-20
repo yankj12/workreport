@@ -111,8 +111,7 @@ public class LoginAction extends ActionSupport{
 						return "success";
 					}else {
 						success = false;
-						//errorMsg = "用户名或密码不正确！";
-						errorMsg = responseVo.getErrorMsg();
+						errorMsg = "用户名或密码不正确！";
 						return "login";
 					}
 				} catch (Exception e) {
